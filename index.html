@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es" class="dark">
   <head>
     <meta charset="UTF-8" />
@@ -6,9 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Los Amigos Bar & Coctelería — Cócteles artesanales, música en vivo y la mejor vibra en el corazón de Tucumán. Reservá tu mesa hoy." />
     <meta name="theme-color" content="#0a0a0f" />
-    <!-- Google Fonts preconnect -->
+
+    <!-- Google Fonts. El <link> va acá y no como @import en index.css: un
+         @import se descubre recién después de bajar y parsear el CSS, así que
+         serializa dos viajes de red antes del primer texto pintado. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&display=swap"
+    />
+
+    <!-- Las fotos salen del CDN de Unsplash. Sin esto, la primera imagen del
+         About paga DNS + TLS entera justo cuando el usuario llega a la sección. -->
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+
     <title>Los Amigos Bar & Coctelería — Tucumán</title>
   </head>
   <body>
