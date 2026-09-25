@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-// ── Page transition variants ───────────────────────────────────────────────────
+// ── Page transition variants ──
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
   animate: {
@@ -19,11 +19,6 @@ const pageVariants = {
   },
 };
 
-/**
- * Layout — Master container component.
- * Renders Navbar + animated page content (via <Outlet />) + Footer.
- * Uses AnimatePresence keyed by pathname to trigger smooth page transitions.
- */
 export default function Layout() {
   const location = useLocation();
 
@@ -32,7 +27,7 @@ export default function Layout() {
       {/* Fixed navigation bar */}
       <Navbar />
 
-      {/* Main content area — offset for fixed navbar height */}
+      {/* Main content area */}
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={location.pathname}

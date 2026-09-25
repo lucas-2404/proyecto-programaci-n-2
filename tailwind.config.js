@@ -41,6 +41,12 @@ export default {
         "pulse-gold":    "pulse-gold 3s ease-in-out infinite",
         "fade-up":       "fade-up 0.6s ease-out forwards",
         "slide-in-left": "slide-in-left 0.5s ease-out forwards",
+        // `alternate` + sine easing: smooth back-and-forth loops, no restart jump.
+        "scroll-bob":    "scroll-bob 1.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate",
+        "scroll-rail":   "scroll-rail 1.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate",
+        "sign-swing":    "sign-swing 3.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate",
+        "neon-flicker":  "neon-flicker 7s linear infinite",
+        "clock-blink":   "clock-blink 1s steps(1, end) infinite",
       },
       keyframes: {
         shimmer: {
@@ -62,6 +68,29 @@ export default {
         "slide-in-left": {
           "0%":   { opacity: "0", transform: "translateX(-20px)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "scroll-bob": {
+          "0%":   { opacity: "1", transform: "translate3d(0, 0, 0)" },
+          "100%": { opacity: "0.45", transform: "translate3d(0, 11px, 0)" },
+        },
+        "scroll-rail": {
+          "0%":   { transform: "translate3d(0, 0, 0)" },
+          "100%": { transform: "translate3d(0, 26px, 0)" },
+        },
+        // Pendulum around the hook (origin-top): left ↔ right.
+        "sign-swing": {
+          "0%":   { transform: "rotate(-5deg)" },
+          "100%": { transform: "rotate(5deg)" },
+        },
+        "clock-blink": {
+          "0%":  { opacity: "1" },
+          "50%": { opacity: "0.2" },
+        },
+        "neon-flicker": {
+          "0%, 88%, 90.5%, 93.5%, 100%": { opacity: "1" },
+          "89%":   { opacity: "0.35" },
+          "91.5%": { opacity: "0.75" },
+          "92.5%": { opacity: "0.3" },
         },
       },
     },

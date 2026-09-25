@@ -46,7 +46,7 @@ const CONTACT_INFO = [
   {
     id:    "footer-address",
     label: "Dirección",
-    value: "Av. San Martín 1420, Rosario",
+    value: "Av. San Martín 1420, Tucumán",
     icon:  "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z",
   },
   {
@@ -157,7 +157,7 @@ export default function Footer() {
 
             {/* Tagline */}
             <p className="text-brand-muted text-sm leading-relaxed max-w-xs mb-6">
-              El lugar donde cada noche se convierte en un recuerdo. Cócteles artesanales, música en vivo y la mejor compañía en el corazón de Rosario.
+              El lugar donde cada noche se convierte en un recuerdo. Cócteles artesanales, música en vivo y la mejor compañía en el corazón de Tucumán.
             </p>
 
             {/* Social icons */}
@@ -280,7 +280,7 @@ export default function Footer() {
 
           {/* Crafted-with tag */}
           <p className="text-brand-muted/60 text-[11px] tracking-wide">
-            Hecho con <span className="text-brand-gold">♥</span> en Rosario, ARG
+            Hecho con <span className="text-brand-gold">♥</span> en Tucumán, ARG
           </p>
         </motion.div>
       </div>
