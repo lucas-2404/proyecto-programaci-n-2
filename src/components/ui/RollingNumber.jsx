@@ -27,7 +27,7 @@ function DigitReel({ digit, slots, active, duration, delay }) {
   return (
     <span className={`relative inline-block h-[1.3em] overflow-hidden ${REEL_MASK}`}>
       <motion.span
-        className="flex flex-col will-change-transform"
+        className="flex flex-col"
         initial={{ y: start }}
         animate={{ y: active ? "0em" : start }}
         transition={{ duration, delay, ease: LANDING_EASE }}

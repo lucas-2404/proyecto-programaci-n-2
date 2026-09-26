@@ -10,12 +10,11 @@ import PillarIcon from "./PillarIcon";
 import { GALLERY, PILLARS, STATS, STORY, TAP_LIST } from "./aboutContent";
 
 const IMAGE_ZOOM = "transition-transform duration-700 ease-out group-hover:scale-105";
-const GLASS_CARD = "rounded-[22px] border border-white/[0.08] bg-white/[0.035] backdrop-blur-md";
+const GLASS_CARD = "rounded-[22px] border border-white/[0.08] bg-white/[0.035]";
 
 // Parallax depth, in px: [offset entering from below, offset leaving at the top].
 // Positive → negative rises faster than the page (closer); the reverse lags (farther).
 const DEPTH = {
-  glow: [-180, 180],
   title: [30, -30],
   intro: [70, -70],
   story: [16, -16],
@@ -44,9 +43,17 @@ export default function AboutSection() {
         className="relative isolate overflow-hidden bg-gradient-to-b from-gray-900 to-black py-24 md:py-36"
       >
         <NoiseOverlay />
-        <Parallax
-          range={DEPTH.glow}
-          className="pointer-events-none absolute -right-48 top-96 -z-10 h-[45rem] w-[45rem] rounded-full bg-brand-gold/[0.06] blur-[160px]"
+        {/* Glow de fondo. Antes era un div de 720×720 con blur-[160px] dentro
+            de un <Parallax>: el navegador tenía que re-rasterizar ese desenfoque
+            gigante en cada frame de scroll. Un radial-gradient da el mismo halo
+            difuso, se rasteriza una sola vez y no crea capa ni filtro. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-48 top-96 -z-10 h-[45rem] w-[45rem] rounded-full"
+          style={{
+            background:
+              "radial-gradient(closest-side, rgba(212,160,23,0.085), rgba(212,160,23,0.03) 55%, transparent 78%)",
+          }}
         />
 
         <div className="section-container flex flex-col gap-24 md:gap-28">
@@ -104,6 +111,7 @@ export default function AboutSection() {
                   <ParallaxImage
                     photoId={GALLERY.main.photoId}
                     alt={GALLERY.main.alt}
+                    priority
                     width={1080}
                     height={810}
                     sizes="(min-width: 1024px) 25vw, 100vw"

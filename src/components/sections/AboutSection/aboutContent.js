@@ -16,7 +16,7 @@ export const GALLERY = {
   main: {
     photoId: "1514933651103-005eec06c04b",
     alt: "La barra de Los Amigos con pizarras de cervezas tiradas",
-    caption: { title: "La barra", place: "[BARRIO], Rosario" },
+    caption: { title: "La barra", place: "Barrio Norte, SM de Tucuman" },
   },
   side: [
     { photoId: "1535958636474-b021ee887b13", alt: "Cerveza artesanal tirada de canilla" },
