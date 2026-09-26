@@ -4,11 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // ── Navigation links configuration ────────────────────────────────────────────
 const NAV_LINKS = [
-  { href: "/",         label: "Inicio" },
-  { href: "/menu",     label: "Carta" },
-  { href: "/eventos",  label: "Eventos" },
-  { href: "/nosotros", label: "Nosotros" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/", label: "Inicio" },
+  { href: "/menu", label: "Carta" },
+  { href: "/eventos", label: "Eventos" },
+  { href: "/contacto", label: "Contacto" }
 ];
 
 // ── Animation variants ─────────────────────────────────────────────────────────
@@ -67,7 +66,7 @@ function HamburgerIcon({ isOpen }) {
 // ── Main Navbar component ──────────────────────────────────────────────────────
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled,  setIsScrolled]  = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Track scroll to enhance glass effect on scroll
   useEffect(() => {
@@ -91,8 +90,8 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [isMenuOpen]);
 
-  const toggleMenu  = useCallback(() => setIsMenuOpen((v) => !v), []);
-  const closeMenu   = useCallback(() => setIsMenuOpen(false), []);
+  const toggleMenu = useCallback(() => setIsMenuOpen((v) => !v), []);
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
   return (
     <>
