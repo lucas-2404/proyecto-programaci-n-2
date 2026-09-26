@@ -9,8 +9,8 @@ export default function MenuHeader() {
     <header className="text-center mb-12 md:mb-16">
       {/* Eyebrow badge */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ y: 16 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-brand-gold/25 mb-6"
       >
@@ -22,8 +22,8 @@ export default function MenuHeader() {
 
       {/* Main heading */}
       <motion.h1
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ y: 24 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
         className="font-heading font-bold text-4xl md:text-6xl text-brand-heading leading-tight mb-4 text-balance"
       >
@@ -33,8 +33,8 @@ export default function MenuHeader() {
 
       {/* Subtitle */}
       <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ y: 20 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.55, delay: 0.35 }}
         className="text-brand-subtle text-base md:text-lg leading-relaxed max-w-xl mx-auto"
       >
@@ -44,8 +44,8 @@ export default function MenuHeader() {
 
       {/* Decorative divider */}
       <motion.div
-        initial={{ opacity: 0, scaleX: 0 }}
-        animate={{ opacity: 1, scaleX: 1 }}
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
         transition={{ duration: 0.6, delay: 0.5 }}
         className="mt-8 mx-auto w-20 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent"
         aria-hidden="true"

@@ -13,7 +13,7 @@ import MenuEmptyState from "./MenuEmptyState";
  */
 export default function MenuProductGrid({ products, activeCategoryId }) {
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={activeCategoryId}
         initial={{ opacity: 0, y: 12 }}
