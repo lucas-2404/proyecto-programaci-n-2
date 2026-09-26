@@ -32,8 +32,8 @@ export default function MenuProductCard({ product, index }) {
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ y: 18 }}
+      animate={{ y: 0 }}
       transition={{ duration: 0.38, delay: index * 0.07, ease: "easeOut" }}
       whileHover={{ y: -3, transition: { duration: 0.18 } }}
       aria-label={`${product.name}, ${formattedPrice}`}
@@ -57,7 +57,10 @@ export default function MenuProductCard({ product, index }) {
         className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none z-10 transition-opacity duration-500 overflow-hidden rounded-2xl"
         aria-hidden="true"
       >
-        <div className="absolute inset-0 w-full h-full bg-[linear-gradient(105deg,transparent_20%,rgba(212,160,23,0.08)_25%,transparent_30%)] bg-[length:200%_100%] animate-shimmer" />
+        {/* La animación sólo arranca en hover. Antes era `animate-shimmer` a
+            secas: corría infinita en las 24 tarjetas dentro de un contenedor
+            opacity-0, o sea repintando siempre algo que nunca se ve. */}
+        <div className="absolute inset-0 w-full h-full bg-[linear-gradient(105deg,transparent_20%,rgba(212,160,23,0.08)_25%,transparent_30%)] bg-[length:200%_100%] group-hover:animate-shimmer" />
       </div>
 
       {/* Visual hero block (Image or Emoji fallback) */}

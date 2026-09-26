@@ -29,7 +29,7 @@ export default function Menu() {
     >
       {/* ── Hero de categoria con imagen real ──────────────────── */}
       <div className="relative h-56 md:h-72 overflow-hidden">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           <motion.img
             key={selectedCategoryId}
             src={selectedCategory?.categoryImage}
@@ -39,7 +39,12 @@ export default function Menu() {
             exit={{ opacity: 0, scale: 0.97 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
             className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
+            width={1200}
+            height={896}
+            // Es lo primero que se ve al entrar: con loading="lazy" el navegador
+            // la posterga y el hero queda negro hasta que termina de bajar.
+            fetchPriority="high"
+            decoding="async"
           />
         </AnimatePresence>
 
@@ -49,7 +54,7 @@ export default function Menu() {
 
         {/* Category name badge sobre la imagen */}
         <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={`badge-${selectedCategoryId}`}
               initial={{ opacity: 0, y: 10 }}
@@ -80,7 +85,7 @@ export default function Menu() {
         />
 
         {/* Descripcion de la categoria activa */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           {selectedCategory?.description && (
             <motion.p
               key={`desc-${selectedCategoryId}`}

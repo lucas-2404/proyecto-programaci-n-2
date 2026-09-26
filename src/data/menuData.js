@@ -6,7 +6,9 @@
  *   - Migracion futura a API/backend (solo reemplazar este modulo)
  *   - Testing unitario de datos independiente de la presentacion
  *
- * categoryImage: imagen hero de la categoria (publica en /menu/{id}.jpg)
+ * categoryImage: imagen hero de la categoria (publica en /img/menu/{id}.jpg).
+ * Ojo: NO puede vivir en /menu/ — colisiona con la ruta /menu de React Router
+ * y el filesystem de Vercel se resuelve antes que los rewrites.
  */
 
 import imgMojito from "../img/bebida-ron.avif";
@@ -43,7 +45,7 @@ export const menuCategories = [
     name: "Cockteles",
     description: "Creaciones artesanales con los mejores destilados",
     icon: "🍸",
-    categoryImage: "/menu/cocteles.jpg",
+    categoryImage: "/img/menu/cocteles.jpg",
     products: [
       {
         id: "coctel-mojito-amigos",
@@ -106,7 +108,7 @@ export const menuCategories = [
     name: "Cervezas",
     description: "Artesanales y de importacion seleccionadas",
     icon: "🍺",
-    categoryImage: "/menu/cervezas.jpg",
+    categoryImage: "/img/menu/cervezas.jpg",
     products: [
       {
         id: "cerveza-ipa-local",
@@ -160,7 +162,7 @@ export const menuCategories = [
     name: "Picadas",
     description: "Para compartir y maridar perfectamente",
     icon: "🧀",
-    categoryImage: "/menu/picadas.jpg",
+    categoryImage: "/img/menu/picadas.jpg",
     products: [
       {
         id: "picada-clasica",
@@ -214,7 +216,7 @@ export const menuCategories = [
     name: "Shots",
     description: "Para los que quieren empezar bien la noche",
     icon: "🥃",
-    categoryImage: "/menu/shots.jpg",
+    categoryImage: "/img/menu/shots.jpg",
     products: [
       {
         id: "shot-tequila",
@@ -259,7 +261,7 @@ export const menuCategories = [
     name: "Sin Alcohol",
     description: "Opciones refrescantes para todos",
     icon: "🧃",
-    categoryImage: "/menu/sin-alcohol.jpg",
+    categoryImage: "/img/menu/sin-alcohol.jpg",
     products: [
       {
         id: "limonada-menta",

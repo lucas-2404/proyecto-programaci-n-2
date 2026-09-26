@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { MotionConfig, motion } from "framer-motion";
 import GlyphPortal from "../../ui/GlyphPortal";
 import LiveClock from "../../ui/LiveClock";
 import NeonSign from "../../ui/NeonSign";
@@ -37,6 +38,32 @@ const RETRACT_DOWN = {
     "translate3d(0, calc((1 - var(--gp-caption, 1)) * (100% + var(--gp-height, 100svh) * 0.09 + 1rem)), 0)",
 };
 
+// Entrada del estado inicial. Cada pieza entra por el borde por el que después
+// sale al scrollear: el cartel baja del techo (se retrae hacia arriba), el texto
+// llega desde la derecha, y el indicador y el reloj suben desde abajo.
+//
+// Van en un contenedor PROPIO y no en los nodos existentes: esos ya tienen el
+// transform del scroll (RETRACT_*), la opacidad de --gp-caption, y el cartel su
+// balanceo CSS. Animar el mismo nodo pisaría una de las dos cosas; anidados, los
+// transforms y las opacidades se componen.
+const EASE_OUT = [0.22, 1, 0.36, 1]; // misma curva que <Reveal>, sin sobre-rebote
+
+const ENTER_SIGN = {
+  initial: { opacity: 0, y: "-100%" },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.9, delay: 0.1, ease: EASE_OUT },
+};
+const ENTER_CAPTION = {
+  initial: { opacity: 0, x: 40 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.8, delay: 0.45, ease: EASE_OUT },
+};
+const ENTER_CORNER = {
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, delay: 0.7, ease: EASE_OUT },
+};
+
 // TODO: completar con los datos reales del bar.
 const TONIGHT = [
   { label: "Horario", value: "19:00 - 02:00" },
@@ -68,27 +95,36 @@ function HeroBackground() {
 
 function HeroFront() {
   return (
-    <>
+    // reducedMotion="user": sin desplazamiento, solo el fundido (igual que el About).
+    <MotionConfig reducedMotion="user">
       {/* Hangs from the top of the frame down to just above the word. */}
       <div
         className="absolute inset-x-0 top-0 flex h-[calc(var(--gp-word-top,35%)_-_1.25rem)] justify-center will-change-transform"
         style={RETRACT_UP}
       >
-        <NeonSign title="Abierto" subtitle="esta noche" className="h-full" />
+        <motion.div className="flex h-full justify-center" {...ENTER_SIGN}>
+          <NeonSign title="Abierto" subtitle="esta noche" className="h-full" />
+        </motion.div>
       </div>
 
       <p className="absolute inset-x-4 top-[calc(var(--gp-word-bottom,65%)_+_1.75rem)] mx-auto max-w-md text-center text-base leading-relaxed text-brand-subtle opacity-[var(--gp-caption,1)] sm:text-lg">
-        Cervezas artesanales, coctelería de autor y la barra amiguera de siempre. Scrollea para entrar
+        <motion.span className="block" {...ENTER_CAPTION}>
+          Cervezas artesanales, coctelería de autor y la barra amiguera de siempre. Scrollea para entrar
+        </motion.span>
       </p>
 
       <div className="absolute bottom-[9%] left-[8%] will-change-transform" style={RETRACT_DOWN}>
-        <ScrollIndicator />
+        <motion.div {...ENTER_CORNER}>
+          <ScrollIndicator />
+        </motion.div>
       </div>
 
       <div className="absolute bottom-[9%] right-[8%] will-change-transform" style={RETRACT_DOWN}>
-        <LiveClock label="Tucumán · ahora" timeZone={BAR_TIME_ZONE} />
+        <motion.div {...ENTER_CORNER}>
+          <LiveClock label="Tucumán · ahora" timeZone={BAR_TIME_ZONE} />
+        </motion.div>
       </div>
-    </>
+    </MotionConfig>
   );
 }
 
