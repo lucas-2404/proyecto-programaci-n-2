@@ -1,6 +1,7 @@
-﻿import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
+import ContactPage from "./pages/ContactPage";
 
 /**
  * App — Root component. Sets up React Router with the master Layout
@@ -14,6 +15,9 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           {/* Index route → HomePage */}
           <Route index element={<HomePage />} />
+
+          {/* Contact page */}
+          <Route path="/contacto" element={<ContactPage />} />
 
           {/* Placeholder routes */}
 
