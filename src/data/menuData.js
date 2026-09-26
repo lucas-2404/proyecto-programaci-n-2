@@ -36,7 +36,7 @@ import imgVodka from "../img/Vodka Premium.webp";
 import imgLimonada from "../img/limonada con menta.webp";
 import imgMocktail from "../img/Mocktail de Frutilla.jpg";
 import imgSanPellegrino from "../img/San Pellegrino.webp";
-import imgJugoNaranja from "../img/Jugo de naranja.jpg"
+import imgJugoNaranja from "../img/jugo de naranja.jpg";
 export const menuCategories = [
   {
     id: "cocteles",
