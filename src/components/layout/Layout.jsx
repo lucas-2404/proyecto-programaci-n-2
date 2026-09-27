@@ -1,6 +1,5 @@
-﻿import { Outlet } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { useLocation } from "react-router-dom";
+﻿import { motion, AnimatePresence } from "framer-motion";
+import { useLocation, useOutlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
@@ -20,6 +19,7 @@ const pageVariants = {
 
 export default function Layout() {
   const location = useLocation();
+  const outlet = useOutlet();
 
   return (
     <div className="relative flex flex-col min-h-screen bg-brand-bg">
@@ -39,7 +39,7 @@ export default function Layout() {
           role="main"
           aria-label="Contenido principal"
         >
-          <Outlet />
+          {outlet}
         </motion.main>
       </AnimatePresence>
 
