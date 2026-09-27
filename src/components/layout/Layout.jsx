@@ -26,15 +26,8 @@ export default function Layout() {
       {/* Fixed navigation bar */}
       <Navbar />
 
-      {/* Main content area.
-          mode="popLayout" y no "wait": con "wait" la pagina vieja tenia que
-          terminar de desvanecerse ANTES de montar la nueva, que ademas arrancaba
-          invisible — quedaban ~0,3s con el contenido en opacidad cero (el
-          "pestaneo" al navegar). Con popLayout la que sale se saca del flujo
-          (position: absolute) y se desvanece encima mientras la nueva ya entra:
-          nunca hay un instante vacio. Por eso el <div> de arriba es `relative`:
-          PopChild mide offsetTop/offsetLeft contra el offsetParent. */}
-      <AnimatePresence mode="popLayout" initial={false}>
+      {/* Main content area, with page transitions */}
+      <AnimatePresence mode="popLayout">
         <motion.main
           key={location.pathname}
           variants={pageVariants}
