@@ -2,12 +2,9 @@ import { memo } from "react";
 import { RevealGroup, RevealItem } from "../../ui/Reveal";
 import { Reveal } from "../../ui/Reveal";
 import SectionEyebrow from "../../ui/SectionEyebrow";
-import { SOCIAL_LINKS } from "./contactContent";
 
 // ── Sub-component (memoized) ────────────────────────────────────────────────────
-/**
- * SocialCard — Individual social network card with icon, label, and handle.
- */
+// Individual social network card with icon, label, and handle
 const SocialCard = memo(function SocialCard({ label, handle, href, icon }) {
   return (
     <a
@@ -56,12 +53,10 @@ const SocialCard = memo(function SocialCard({ label, handle, href, icon }) {
 });
 
 // ── Main component ──────────────────────────────────────────────────────────────
-/**
- * ContactSocial — Section with eyebrow, heading, and grid of social network cards.
- */
-export default function ContactSocial() {
+// Section with eyebrow, heading, and grid of social network cards
+export default function ContactSocial({ links }) {
   return (
-    <div className="section-container">
+    <section className="section-container">
       {/* Header */}
       <Reveal className="flex flex-col gap-4 mb-10 max-w-lg">
         <SectionEyebrow>Redes sociales</SectionEyebrow>
@@ -80,7 +75,9 @@ export default function ContactSocial() {
         stagger={0.08}
         className="grid grid-cols-2 gap-4 sm:grid-cols-4"
       >
-        {SOCIAL_LINKS.map(({ label, handle, href, icon }) => (
+        {/* .map() crea una tarjeta por red social. Desestructuramos cada
+            objeto para usar sus campos directo; la key es el nombre de la red. */}
+        {links.map(({ label, handle, href, icon }) => (
           <RevealItem as="li" key={label}>
             <SocialCard
               label={label}
@@ -91,6 +88,6 @@ export default function ContactSocial() {
           </RevealItem>
         ))}
       </RevealGroup>
-    </div>
+    </section>
   );
 }

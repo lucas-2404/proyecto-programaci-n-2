@@ -1,10 +1,16 @@
-﻿import Menu from "../components/menu/Menu";
+import Menu from "../components/menu/Menu";
+import Seo from "../components/seo/Seo";
+import { menuCategories } from "../data/menuData";
 
-/**
- * MenuPage — Pagina de la carta del bar.
- * Actua como thin wrapper entre el router y el componente Menu.
- * Esta separacion permite reutilizar <Menu /> en otros contextos si fuera necesario.
- */
+// Página /menu (la carta)
 export default function MenuPage() {
-  return <Menu />;
+  return (
+    <>
+      <Seo
+        title="Carta"
+        description="Nuestra carta: cócteles de autor, cervezas artesanales, picadas para compartir, shots y opciones sin alcohol. Precios en pesos argentinos."
+      />
+      <Menu categories={menuCategories} />
+    </>
+  );
 }

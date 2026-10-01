@@ -14,12 +14,7 @@ const LANDING_EASE = [0.2, 0.85, 0.25, 1.06];
 const REEL_MASK =
   "[mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_15%,#000_85%,transparent)]";
 
-/**
- * One slot-machine reel. The strip holds the target at the top and the digits
- * below it counting down, so sliding the strip downward (translateY → 0)
- * shows numbers entering from above and leaving below, ascending until the
- * target lands.
- */
+// One slot-machine reel
 function DigitReel({ digit, slots, active, duration, delay }) {
   const strip = Array.from({ length: slots }, (_, i) => (digit - i + 10 * slots) % 10);
   const start = `${-(slots - 1) * ITEM_EM}em`;
@@ -42,15 +37,7 @@ function DigitReel({ digit, slots, active, duration, delay }) {
   );
 }
 
-/**
- * RollingNumber — Slot-machine counter: when it first scrolls into view each
- * digit rolls down through other numbers and lands on the real one, reels
- * stopping left to right. Non-digit characters stay fixed.
- *
- * Transform-only (framer-motion), so it stays on the compositor. Screen
- * readers get the plain value; reduced motion (MotionConfig "user") lands
- * instantly.
- */
+// Contador tipo tragamonedas: al entrar en pantalla cada dígito gira y se frena en su valor
 export default function RollingNumber({ value, delay = 0, className }) {
   const ref = useRef(null);
   const active = useInView(ref, { once: true });

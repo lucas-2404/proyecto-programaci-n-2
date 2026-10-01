@@ -1,13 +1,9 @@
 import { memo } from "react";
 import { RevealGroup, RevealItem } from "../../ui/Reveal";
 import { cn } from "../../../utils/cn";
-import { CONTACT_INFO } from "./contactContent";
 
 // ── Sub-component (memoized) ────────────────────────────────────────────────────
-/**
- * InfoCard — Single glass card for one piece of contact info.
- * Conditionally wraps content in an <a> if an href is provided.
- */
+// Single glass card for one piece of contact info
 const InfoCard = memo(function InfoCard({ id, icon, label, value, detail, href, external }) {
   const inner = (
     <div className="flex items-start gap-4">
@@ -72,10 +68,8 @@ const InfoCard = memo(function InfoCard({ id, icon, label, value, detail, href, 
 });
 
 // ── Main component ──────────────────────────────────────────────────────────────
-/**
- * ContactInfo — Grid of 3 glass cards: address, phone, hours.
- */
-export default function ContactInfo() {
+// Grid of 3 glass cards: address, phone, hours
+export default function ContactInfo({ items }) {
   return (
     <div className="section-container">
       <RevealGroup
@@ -83,7 +77,8 @@ export default function ContactInfo() {
         stagger={0.1}
         className="grid grid-cols-1 gap-4 sm:grid-cols-3"
       >
-        {CONTACT_INFO.map((item) => (
+        {/* .map() crea una tarjeta por dato; la key es el `id`, único y estable */}
+        {items.map((item) => (
           <RevealItem as="li" key={item.id}>
             <InfoCard {...item} />
           </RevealItem>

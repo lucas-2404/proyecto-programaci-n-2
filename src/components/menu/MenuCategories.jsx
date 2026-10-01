@@ -1,14 +1,6 @@
 ﻿import { motion } from "framer-motion";
 
-/**
- * MenuCategories — Navegacion horizontal de categorias del menu.
- * Responsabilidad: renderizar tabs de categoria y notificar la seleccion al padre.
- *
- * @param {Object} props
- * @param {Array}  props.categories      - Lista de categorias del menu
- * @param {string} props.selectedId      - ID de la categoria actualmente seleccionada
- * @param {Function} props.onSelect      - Callback al seleccionar una categoria
- */
+// Navegacion horizontal de categorias del menu
 export default function MenuCategories({ categories, selectedId, onSelect }) {
   return (
     <nav

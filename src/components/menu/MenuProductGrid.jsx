@@ -2,15 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import MenuProductCard from "./MenuProductCard";
 import MenuEmptyState from "./MenuEmptyState";
 
-/**
- * MenuProductGrid — Contenedor de grilla de productos.
- * Responsabilidad: distribucion responsive de tarjetas de producto.
- * Aplica AnimatePresence para transicion fluida al cambiar de categoria.
- *
- * @param {Object}   props
- * @param {Array}    props.products         - Lista de productos a mostrar
- * @param {string}   props.activeCategoryId - ID de la categoria activa (key para AnimatePresence)
- */
+// Contenedor de grilla de productos
 export default function MenuProductGrid({ products, activeCategoryId }) {
   return (
     <AnimatePresence mode="wait" initial={false}>

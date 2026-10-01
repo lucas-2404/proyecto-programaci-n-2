@@ -24,11 +24,8 @@ const PORTAL_THEME = {
   "--gp-foreground": "#f0f0f8",
 };
 
-// Scroll parallax for the opening frame. GlyphPortal writes --gp-caption on the
-// section every scroll frame (1 at rest → 0 at ~16% of the travel, smoothstep).
-// Pure CSS transforms driven by that var: no listeners, no React re-renders.
-// The sign retracts up past the top edge (plus room for its glow); the scroll
-// indicator and the clock drop below the bottom edge (plus their 9% offset).
+// GlyphPortal escribe --gp-caption (1 en reposo, 0 al scrollear) y estos transforms
+// sacan el cartel por arriba y el indicador y el reloj por abajo
 
 const RETRACT_UP = {
   transform: "translate3d(0, calc((var(--gp-caption, 1) - 1) * (100% + 3rem)), 0)",
@@ -38,14 +35,8 @@ const RETRACT_DOWN = {
     "translate3d(0, calc((1 - var(--gp-caption, 1)) * (100% + var(--gp-height, 100svh) * 0.09 + 1rem)), 0)",
 };
 
-// Entrada del estado inicial. Cada pieza entra por el borde por el que después
-// sale al scrollear: el cartel baja del techo (se retrae hacia arriba), el texto
-// llega desde la derecha, y el indicador y el reloj suben desde abajo.
-//
-// Van en un contenedor PROPIO y no en los nodos existentes: esos ya tienen el
-// transform del scroll (RETRACT_*), la opacidad de --gp-caption, y el cartel su
-// balanceo CSS. Animar el mismo nodo pisaría una de las dos cosas; anidados, los
-// transforms y las opacidades se componen.
+// Entrada de cada pieza. Va en un contenedor aparte porque los nodos de abajo ya tienen
+// el transform del scroll; animar el mismo nodo pisaría uno de los dos
 const EASE_OUT = [0.22, 1, 0.36, 1]; // misma curva que <Reveal>, sin sobre-rebote
 
 const ENTER_SIGN = {
@@ -64,17 +55,11 @@ const ENTER_CORNER = {
   transition: { duration: 0.7, delay: 0.7, ease: EASE_OUT },
 };
 
-// TODO: completar con los datos reales del bar.
-const TONIGHT = [
-  { label: "Horario", value: "19:00 - 02:00" },
-  { label: "Música en vivo", value: "30 sep. - 20:00hs" },
-  { label: "Happy hour", value: "21:00 - 22:00" },
-];
 
 // ── Portal slots ───────────────────────────────────────────────────────────────
 // Declared once at module scope: stable references, never rebuilt on re-render.
 
-/** Scene seen through the letters, then full-bleed once the camera enters. */
+// Scene seen through the letters, then full-bleed once the camera enters
 function HeroBackground() {
   return (
     <div className="absolute inset-0 will-change-transform [transform:scale(var(--gp-field-scale,1))]">
@@ -128,8 +113,8 @@ function HeroFront() {
   );
 }
 
-/** Revealed once the camera passes through the O. */
-function HeroContent() {
+// Revealed once the camera passes through the O
+function HeroContent({ tonight }) {
   return (
     <div className="mx-auto grid w-full max-w-7xl items-end gap-12 lg:grid-cols-12">
       <div className="flex flex-col gap-7 lg:col-span-7">
@@ -172,7 +157,8 @@ function HeroContent() {
           </span>
         </div>
         <dl className="flex flex-col gap-2.5 text-[15px]">
-          {TONIGHT.map(({ label, value }) => (
+          {/* Una fila (dt + dd) por dato del día; la etiqueta es la key. */}
+          {tonight.map(({ label, value }) => (
             <div key={label} className="flex justify-between gap-4">
               <dt className="text-brand-subtle">{label}</dt>
               <dd className="text-brand-heading">{value}</dd>
@@ -188,12 +174,8 @@ const heroBackground = <HeroBackground />;
 const heroFront = <HeroFront />;
 
 // ── Section ────────────────────────────────────────────────────────────────────
-/**
- * HeroSection — Scroll-driven camera through the word "AMIGOS" (GlyphPortal).
- * The portal mounts only after Playfair Display 900 is ready: it freezes its
- * font on mount and would fall back to a static frame if the face were pending.
- */
-export default function HeroSection() {
+// Scroll-driven camera through the word "AMIGOS" (GlyphPortal)
+export default function HeroSection({ tonight }) {
   const fontReady = useFontReady(PORTAL_FONT_DESCRIPTOR, HERO_WORD);
 
   if (!fontReady) {
@@ -212,13 +194,12 @@ export default function HeroSection() {
       background={heroBackground}
       front={heroFront}
       enterLabel="Entrar al bar"
-      // Front layer stays opaque: its pieces exit by moving, not by fading.
-      // The portal's "Entrar al bar" link is replaced visually by the clock but
-      // kept as a keyboard skip link: hidden until it receives focus.
+      // La capa frontal sale moviéndose, no con fade. El enlace "Entrar al bar" queda
+      // oculto y solo aparece al recibir foco con el teclado
       className="font-sans text-[13px] tracking-wide [&_[data-gp-front]]:opacity-100 [&_[data-gp-enter]:not(:focus-visible)]:sr-only"
       style={PORTAL_THEME}
     >
-      <HeroContent />
+      <HeroContent tonight={tonight} />
     </GlyphPortal>
   );
 }
