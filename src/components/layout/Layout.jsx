@@ -14,6 +14,7 @@ const pageVariants = {
 // Navbar arriba, la página actual en el medio y Footer abajo
 export default function Layout() {
   const location = useLocation();
+  const outlet = useOutlet();
 
   return (
     <div className="relative flex flex-col min-h-screen bg-brand-bg">
@@ -33,7 +34,7 @@ export default function Layout() {
           role="main"
           aria-label="Contenido principal"
         >
-          <Outlet />
+          {outlet}
         </motion.main>
       </AnimatePresence>
 

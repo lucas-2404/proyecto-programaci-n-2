@@ -220,11 +220,6 @@ export default function Footer({ links, socialLinks, contactInfo }) {
               ))}
             </ul>
           </nav>
-
-          {/* Crafted-with tag */}
-          <p className="text-brand-muted/60 text-[11px] tracking-wide">
-            Hecho con <span className="text-brand-gold">♥</span> en Tucumán, ARG
-          </p>
         </motion.div>
       </div>
     </footer>
