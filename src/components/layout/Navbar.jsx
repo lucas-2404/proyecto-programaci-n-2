@@ -1,13 +1,13 @@
 ﻿import { useState, useEffect, useCallback } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import logoImg from "../../img/logolosamigos.png";
 
 // ── Navigation links configuration ────────────────────────────────────────────
 const NAV_LINKS = [
-  { href: "/",         label: "Inicio" },
-  { href: "/menu",     label: "Carta" },
-  { href: "/eventos",  label: "Eventos" },
-  { href: "/nosotros", label: "Nosotros" },
+  { href: "/", label: "Inicio" },
+  { href: "/menu", label: "Carta" },
+  { href: "/eventos", label: "Eventos" },
   { href: "/contacto", label: "Contacto" },
 ];
 
@@ -67,7 +67,7 @@ function HamburgerIcon({ isOpen }) {
 // ── Main Navbar component ──────────────────────────────────────────────────────
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled,  setIsScrolled]  = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Track scroll to enhance glass effect on scroll
   useEffect(() => {
@@ -91,8 +91,8 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [isMenuOpen]);
 
-  const toggleMenu  = useCallback(() => setIsMenuOpen((v) => !v), []);
-  const closeMenu   = useCallback(() => setIsMenuOpen(false), []);
+  const toggleMenu = useCallback(() => setIsMenuOpen((v) => !v), []);
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
   return (
     <>
@@ -116,11 +116,13 @@ export default function Navbar() {
               className="flex items-center gap-3 group no-select"
               aria-label="Los Amigos – Inicio"
             >
-              {/* Icon mark */}
-              <div className="w-8 h-8 rounded-lg bg-brand-gold flex items-center justify-center shadow-gold-glow group-hover:shadow-gold-strong transition-shadow duration-300">
-                <span className="text-brand-bg font-heading font-bold text-sm leading-none">
-                  LA
-                </span>
+              {/* Logo Image Mark */}
+              <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-gold-glow group-hover:shadow-gold-strong transition-shadow duration-300 bg-brand-card">
+                <img
+                  src={logoImg}
+                  alt="Logo Los Amigos Bar"
+                  className="w-full h-full object-cover"
+                />
               </div>
               {/* Wordmark */}
               <div className="flex flex-col leading-none">
