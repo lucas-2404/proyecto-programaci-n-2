@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { MotionConfig, motion } from "framer-motion";
 import GlyphPortal from "../../ui/GlyphPortal";
 import LiveClock from "../../ui/LiveClock";
 import NeonSign from "../../ui/NeonSign";
@@ -23,11 +24,8 @@ const PORTAL_THEME = {
   "--gp-foreground": "#f0f0f8",
 };
 
-// Scroll parallax for the opening frame. GlyphPortal writes --gp-caption on the
-// section every scroll frame (1 at rest → 0 at ~16% of the travel, smoothstep).
-// Pure CSS transforms driven by that var: no listeners, no React re-renders.
-// The sign retracts up past the top edge (plus room for its glow); the scroll
-// indicator and the clock drop below the bottom edge (plus their 9% offset).
+// GlyphPortal escribe --gp-caption (1 en reposo, 0 al scrollear) y estos transforms
+// sacan el cartel por arriba y el indicador y el reloj por abajo
 
 const RETRACT_UP = {
   transform: "translate3d(0, calc((var(--gp-caption, 1) - 1) * (100% + 3rem)), 0)",
@@ -37,17 +35,31 @@ const RETRACT_DOWN = {
     "translate3d(0, calc((1 - var(--gp-caption, 1)) * (100% + var(--gp-height, 100svh) * 0.09 + 1rem)), 0)",
 };
 
-// TODO: completar con los datos reales del bar.
-const TONIGHT = [
-  { label: "Horario", value: "19:00 - 02:00" },
-  { label: "Música en vivo", value: "30 sep. - 20:00hs" },
-  { label: "Happy hour", value: "21:00 - 22:00" },
-];
+// Entrada de cada pieza. Va en un contenedor aparte porque los nodos de abajo ya tienen
+// el transform del scroll; animar el mismo nodo pisaría uno de los dos
+const EASE_OUT = [0.22, 1, 0.36, 1]; // misma curva que <Reveal>, sin sobre-rebote
+
+const ENTER_SIGN = {
+  initial: { opacity: 0, y: "-100%" },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.9, delay: 0.1, ease: EASE_OUT },
+};
+const ENTER_CAPTION = {
+  initial: { opacity: 0, x: 40 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.8, delay: 0.45, ease: EASE_OUT },
+};
+const ENTER_CORNER = {
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, delay: 0.7, ease: EASE_OUT },
+};
+
 
 // ── Portal slots ───────────────────────────────────────────────────────────────
 // Declared once at module scope: stable references, never rebuilt on re-render.
 
-/** Scene seen through the letters, then full-bleed once the camera enters. */
+// Scene seen through the letters, then full-bleed once the camera enters
 function HeroBackground() {
   return (
     <div className="absolute inset-0 will-change-transform [transform:scale(var(--gp-field-scale,1))]">
@@ -68,32 +80,41 @@ function HeroBackground() {
 
 function HeroFront() {
   return (
-    <>
+    // reducedMotion="user": sin desplazamiento, solo el fundido (igual que el About).
+    <MotionConfig reducedMotion="user">
       {/* Hangs from the top of the frame down to just above the word. */}
       <div
         className="absolute inset-x-0 top-0 flex h-[calc(var(--gp-word-top,35%)_-_1.25rem)] justify-center will-change-transform"
         style={RETRACT_UP}
       >
-        <NeonSign title="Abierto" subtitle="esta noche" className="h-full" />
+        <motion.div className="flex h-full justify-center" {...ENTER_SIGN}>
+          <NeonSign title="Abierto" subtitle="esta noche" className="h-full" />
+        </motion.div>
       </div>
 
       <p className="absolute inset-x-4 top-[calc(var(--gp-word-bottom,65%)_+_1.75rem)] mx-auto max-w-md text-center text-base leading-relaxed text-brand-subtle opacity-[var(--gp-caption,1)] sm:text-lg">
-        Cervezas artesanales, coctelería de autor y la barra amiguera de siempre. Scrollea para entrar
+        <motion.span className="block" {...ENTER_CAPTION}>
+          Cervezas artesanales, coctelería de autor y la barra amiguera de siempre. Scrollea para entrar
+        </motion.span>
       </p>
 
       <div className="absolute bottom-[9%] left-[8%] will-change-transform" style={RETRACT_DOWN}>
-        <ScrollIndicator />
+        <motion.div {...ENTER_CORNER}>
+          <ScrollIndicator />
+        </motion.div>
       </div>
 
       <div className="absolute bottom-[9%] right-[8%] will-change-transform" style={RETRACT_DOWN}>
-        <LiveClock label="Tucumán · ahora" timeZone={BAR_TIME_ZONE} />
+        <motion.div {...ENTER_CORNER}>
+          <LiveClock label="Tucumán · ahora" timeZone={BAR_TIME_ZONE} />
+        </motion.div>
       </div>
-    </>
+    </MotionConfig>
   );
 }
 
-/** Revealed once the camera passes through the O. */
-function HeroContent() {
+// Revealed once the camera passes through the O
+function HeroContent({ tonight }) {
   return (
     <div className="mx-auto grid w-full max-w-7xl items-end gap-12 lg:grid-cols-12">
       <div className="flex flex-col gap-7 lg:col-span-7">
@@ -136,7 +157,8 @@ function HeroContent() {
           </span>
         </div>
         <dl className="flex flex-col gap-2.5 text-[15px]">
-          {TONIGHT.map(({ label, value }) => (
+          {/* Una fila (dt + dd) por dato del día; la etiqueta es la key. */}
+          {tonight.map(({ label, value }) => (
             <div key={label} className="flex justify-between gap-4">
               <dt className="text-brand-subtle">{label}</dt>
               <dd className="text-brand-heading">{value}</dd>
@@ -152,12 +174,8 @@ const heroBackground = <HeroBackground />;
 const heroFront = <HeroFront />;
 
 // ── Section ────────────────────────────────────────────────────────────────────
-/**
- * HeroSection — Scroll-driven camera through the word "AMIGOS" (GlyphPortal).
- * The portal mounts only after Playfair Display 900 is ready: it freezes its
- * font on mount and would fall back to a static frame if the face were pending.
- */
-export default function HeroSection() {
+// Scroll-driven camera through the word "AMIGOS" (GlyphPortal)
+export default function HeroSection({ tonight }) {
   const fontReady = useFontReady(PORTAL_FONT_DESCRIPTOR, HERO_WORD);
 
   if (!fontReady) {
@@ -176,13 +194,12 @@ export default function HeroSection() {
       background={heroBackground}
       front={heroFront}
       enterLabel="Entrar al bar"
-      // Front layer stays opaque: its pieces exit by moving, not by fading.
-      // The portal's "Entrar al bar" link is replaced visually by the clock but
-      // kept as a keyboard skip link: hidden until it receives focus.
+      // La capa frontal sale moviéndose, no con fade. El enlace "Entrar al bar" queda
+      // oculto y solo aparece al recibir foco con el teclado
       className="font-sans text-[13px] tracking-wide [&_[data-gp-front]]:opacity-100 [&_[data-gp-enter]:not(:focus-visible)]:sr-only"
       style={PORTAL_THEME}
     >
-      <HeroContent />
+      <HeroContent tonight={tonight} />
     </GlyphPortal>
   );
 }

@@ -123,7 +123,7 @@ const FooterLink = memo(function FooterLink({ label, href }) {
 });
 
 // ── Main Footer component ──────────────────────────────────────────────────────
-export default function Footer() {
+export default function Footer({ links, socialLinks, contactInfo }) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -166,7 +166,8 @@ export default function Footer() {
 
             {/* Social icons */}
             <div className="flex items-center gap-2" role="list" aria-label="Redes sociales">
-              {SOCIAL_LINKS.map((social) => (
+              {/* .map(): un botón por red social. La key es el nombre de la red. */}
+              {socialLinks.map((social) => (
                 <div key={social.label} role="listitem">
                   <SocialButton {...social} />
                 </div>
@@ -181,7 +182,8 @@ export default function Footer() {
             </h3>
             <nav aria-label="Navegación del pie de página">
               <ul className="flex flex-col gap-2.5" role="list">
-                {FOOTER_LINKS.navegacion.map(({ label, href }) => (
+                {/* .map(): un enlace por página del sitio; el href es único (key). */}
+                {links.navegacion.map(({ label, href }) => (
                   <li key={href}>
                     <FooterLink label={label} href={href} />
                   </li>
@@ -196,7 +198,8 @@ export default function Footer() {
               Dónde Encontrarnos
             </h3>
             <address className="not-italic flex flex-col gap-4">
-              {CONTACT_INFO.map(({ id, label, value, icon }) => (
+              {/* .map(): una fila por dato de contacto; el `id` es la key. */}
+              {contactInfo.map(({ id, label, value, icon }) => (
                 <div key={id} id={id} className="flex items-start gap-3">
                   <div className="mt-0.5 w-7 h-7 rounded-lg bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center flex-shrink-0">
                     <svg className="w-3.5 h-3.5 text-brand-gold" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
@@ -269,7 +272,8 @@ export default function Footer() {
 
           <nav aria-label="Navegación legal">
             <ul className="flex items-center gap-5" role="list">
-              {FOOTER_LINKS.legal.map(({ label, href }) => (
+              {/* .map(): un enlace por documento legal. */}
+              {links.legal.map(({ label, href }) => (
                 <li key={href}>
                   <Link
                     to={href}

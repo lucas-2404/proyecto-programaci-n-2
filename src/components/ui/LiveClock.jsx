@@ -13,10 +13,7 @@ function getFormatter(timeZone) {
   return formatters.get(timeZone);
 }
 
-/**
- * LiveClock — Current time (HH:MM) in a given time zone, with a blinking colon.
- * Re-renders once per minute; the blink is a CSS keyframe (tailwind.config.js).
- */
+// Current time (HH:MM) in a given time zone, with a blinking colon
 export default function LiveClock({ label, timeZone, className }) {
   const parts = getFormatter(timeZone).formatToParts(useCurrentTime());
   const hours = parts.find((part) => part.type === "hour")?.value ?? "--";
