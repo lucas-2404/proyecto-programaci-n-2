@@ -14,7 +14,6 @@ export const FOOTER_LINKS = {
     { label: "Inicio",    href: "/" },
     { label: "Carta",     href: "/menu" },
     { label: "Eventos",   href: "/eventos" },
-    { label: "Nosotros",  href: "/nosotros" },
     { label: "Contacto",  href: "/contacto" },
     { label: "Reservas",  href: "/reservas" },
   ],

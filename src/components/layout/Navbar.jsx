@@ -3,14 +3,6 @@ import { NavLink, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "../../img/logolosamigos.png";
 
-// ── Navigation links configuration ────────────────────────────────────────────
-const NAV_LINKS = [
-  { href: "/", label: "Inicio" },
-  { href: "/menu", label: "Carta" },
-  { href: "/eventos", label: "Eventos" },
-  { href: "/contacto", label: "Contacto" },
-];
-
 // ── Animation variants ─────────────────────────────────────────────────────────
 const mobileMenuVariants = {
   closed: {
