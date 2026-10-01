@@ -1,15 +1,4 @@
-/**
- * menuData.js — Fuente de datos del menu de "Los Amigos".
- *
- * Estructura desacoplada de la UI para facilitar:
- *   - Mantenimiento (agregar categorias/productos sin tocar componentes)
- *   - Migracion futura a API/backend (solo reemplazar este modulo)
- *   - Testing unitario de datos independiente de la presentacion
- *
- * categoryImage: imagen hero de la categoria (publica en /img/menu/{id}.jpg).
- * Ojo: NO puede vivir en /menu/ — colisiona con la ruta /menu de React Router
- * y el filesystem de Vercel se resuelve antes que los rewrites.
- */
+// Fuente de datos del menu de "Los Amigos"
 
 import imgMojito from "../img/bebida-ron.avif";
 import imgNegroni from "../img/negroni.webp";

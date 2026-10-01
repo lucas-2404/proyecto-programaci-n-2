@@ -1,14 +1,6 @@
 import { cn } from "../../utils/cn";
 
-// El grano se calcula UNA vez en un tile de 160×160 y se repite.
-//
-// La versión anterior corría <feTurbulence> sobre todo el elemento
-// (`inset-0 h-full w-full`), o sea varios miles de píxeles de alto en la
-// sección About. El navegador rasteriza ese filtro en CPU y lo rehace en cada
-// repintado, que era la causa principal de la traba al scrollear.
-//
-// El resultado es visualmente idéntico: el ruido fractal es estático y
-// `stitchTiles="stitch"` hace que el tile calce sin costura.
+// El grano se dibuja una sola vez en un tile de 160×160 que se repite
 const TILE = encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160">' +
     '<filter id="n">' +

@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 
-/**
- * useCurrentTime — Current Date, refreshed on each `intervalMs` boundary
- * (default: every minute, exactly when the minute changes), so a clock
- * re-renders once per minute instead of every second.
- * Re-syncs when the tab becomes visible again (background timers are throttled).
- *
- * @param {number} [intervalMs=60000]
- * @returns {Date}
- */
+// Fecha actual, actualizada una vez por minuto
 export function useCurrentTime(intervalMs = 60_000) {
   const [now, setNow] = useState(() => new Date());
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { MAP_EMBED_URL } from "./contactContent";
 
 // ── Fallback placeholder ────────────────────────────────────────────────────────
 function MapPlaceholder() {
@@ -42,11 +41,8 @@ function MapPlaceholder() {
 }
 
 // ── Main component ──────────────────────────────────────────────────────────────
-/**
- * ContactMap — Embedded Google Maps iframe with dark filter to match theme.
- * Falls back to a styled placeholder if the iframe fails to load.
- */
-export default function ContactMap() {
+// Embedded Google Maps iframe with dark filter to match theme
+export default function ContactMap({ mapUrl }) {
   const [hasError, setHasError] = useState(false);
 
   return (
@@ -57,7 +53,7 @@ export default function ContactMap() {
         <>
           <iframe
             title="Ubicación de Los Amigos Bar — Av. San Martín 1420, Tucumán"
-            src={MAP_EMBED_URL}
+            src={mapUrl}
             width="100%"
             height="100%"
             style={{
