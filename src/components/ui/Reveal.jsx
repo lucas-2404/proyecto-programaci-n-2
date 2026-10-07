@@ -17,10 +17,7 @@ const itemVariants = {
   }),
 };
 
-/**
- * Reveal — Fades an element up the first time it enters the viewport.
- * @param {{ as?: string, delay?: number, className?: string, children: React.ReactNode }} props
- */
+// Fades an element up the first time it enters the viewport
 export function Reveal({ as = "div", delay = 0, className, children }) {
   const Tag = motion[as];
   return (
@@ -37,9 +34,7 @@ export function Reveal({ as = "div", delay = 0, className, children }) {
   );
 }
 
-/**
- * RevealGroup — One viewport observer that staggers its <RevealItem> children.
- */
+// Un solo observador que escalona a sus hijos RevealItem
 export function RevealGroup({ as = "div", stagger = 0.12, className, children }) {
   const Tag = motion[as];
   return (
@@ -55,7 +50,7 @@ export function RevealGroup({ as = "div", stagger = 0.12, className, children })
   );
 }
 
-/** RevealItem — Child of <RevealGroup>; inherits the group's trigger. */
+// Hijo de RevealGroup: usa el mismo disparador
 export function RevealItem({ as = "div", className, children }) {
   const Tag = motion[as];
   return (

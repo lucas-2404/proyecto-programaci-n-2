@@ -9,20 +9,7 @@ const TAG_STYLES = {
 };
 const DEFAULT_TAG_STYLE = "bg-white/5 text-brand-subtle border border-white/10";
 
-/**
- * MenuProductCard — Tarjeta de producto premium.
- *
- * Diseno horizontal para maxima legibilidad:
- * ┌─────────────────────────────────────────────┐
- * │  [emoji grande]  │  Nombre   Tags           │
- * │                  │  Descripcion             │
- * │                  │  ─────────  Precio       │
- * └─────────────────────────────────────────────┘
- *
- * @param {Object} props
- * @param {Object} props.product  - Producto: id, name, description, price, tags, emoji
- * @param {number} props.index    - Indice para delay de animacion escalonada
- */
+// Tarjeta de producto premium
 export default function MenuProductCard({ product, index }) {
   const formattedPrice = new Intl.NumberFormat("es-AR", {
     style: "currency",
@@ -57,9 +44,7 @@ export default function MenuProductCard({ product, index }) {
         className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none z-10 transition-opacity duration-500 overflow-hidden rounded-2xl"
         aria-hidden="true"
       >
-        {/* La animación sólo arranca en hover. Antes era `animate-shimmer` a
-            secas: corría infinita en las 24 tarjetas dentro de un contenedor
-            opacity-0, o sea repintando siempre algo que nunca se ve. */}
+        {/* El brillo solo se anima en hover */}
         <div className="absolute inset-0 w-full h-full bg-[linear-gradient(105deg,transparent_20%,rgba(212,160,23,0.08)_25%,transparent_30%)] bg-[length:200%_100%] group-hover:animate-shimmer" />
       </div>
 

@@ -1,7 +1,6 @@
 import { useState, useCallback, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../../utils/cn";
-import { FORM_SUBJECTS } from "./contactContent";
 
 // ── Variants (outside component — stable references) ────────────────────────────
 const feedbackVariants = {
@@ -26,7 +25,7 @@ const spinnerVariants = {
 
 // ── Validation helpers ──────────────────────────────────────────────────────────
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_RE = /^[\d\s\-\+\(\)]{7,20}$/;
+const PHONE_RE = /^[\d\s\-+()]{7,20}$/;
 
 function validateFields(fields) {
   const errors = {};
@@ -94,12 +93,8 @@ function Field({ id, label, error, children }) {
 }
 
 // ── Main component ──────────────────────────────────────────────────────────────
-/**
- * ContactForm — Contact form with 4 states: idle | loading | success | error.
- * Client-side validation runs before the async mock submit.
- * No dangerouslySetInnerHTML. All inputs sanitized with trim().
- */
-export default function ContactForm() {
+// Contact form with 4 states: idle | loading | success | error
+export default function ContactForm({ subjects }) {
   // Unique ID prefix for accessibility (React 18 useId)
   const uid = useId();
 
@@ -362,7 +357,8 @@ export default function ContactForm() {
                   <option value="" disabled>
                     Seleccioná un asunto
                   </option>
-                  {FORM_SUBJECTS.map((s) => (
+                  {/* Una <option> por cada motivo: el texto sirve de key porque no se repite. */}
+                  {subjects.map((s) => (
                     <option key={s} value={s}>
                       {s}
                     </option>

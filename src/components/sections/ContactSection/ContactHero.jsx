@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import { Reveal, RevealGroup, RevealItem } from "../../ui/Reveal";
+import { RevealGroup, RevealItem } from "../../ui/Reveal";
 import SectionEyebrow from "../../ui/SectionEyebrow";
-import { CONTACT_HERO } from "./contactContent";
 
 // ── Variants (defined outside component — no re-creation on re-render) ──────────
 const lineVariants = {
@@ -23,13 +22,10 @@ const badgeVariants = {
 };
 
 // ── Component ───────────────────────────────────────────────────────────────────
-/**
- * ContactHero — Page header for the contact section.
- * Decorative background glow + eyebrow + h1 + subtitle.
- */
-export default function ContactHero() {
+// Page header for the contact section
+export default function ContactHero({ hero }) {
   return (
-    <div className="relative overflow-hidden py-24 md:py-32">
+    <header className="relative overflow-hidden py-24 md:py-32">
       {/* Decorative radial glow — same technique as AboutSection, no blur filter */}
       <div
         aria-hidden="true"
@@ -52,15 +48,15 @@ export default function ContactHero() {
         <RevealGroup className="flex flex-col gap-6 max-w-3xl">
           {/* Eyebrow */}
           <RevealItem>
-            <SectionEyebrow>{CONTACT_HERO.eyebrow}</SectionEyebrow>
+            <SectionEyebrow>{hero.eyebrow}</SectionEyebrow>
           </RevealItem>
 
           {/* Heading */}
           <RevealItem>
             <h1 className="font-heading text-5xl font-bold leading-[1.02] tracking-tight text-brand-heading text-balance md:text-7xl lg:text-8xl">
-              {CONTACT_HERO.heading}{" "}
+              {hero.heading}{" "}
               <span className="italic text-gold-gradient">
-                {CONTACT_HERO.headingAccent}
+                {hero.headingAccent}
               </span>
             </h1>
           </RevealItem>
@@ -80,7 +76,7 @@ export default function ContactHero() {
           {/* Subheading */}
           <RevealItem>
             <p className="text-lg leading-relaxed text-brand-subtle max-w-xl text-balance">
-              {CONTACT_HERO.subheading}
+              {hero.subheading}
             </p>
           </RevealItem>
         </RevealGroup>
@@ -106,6 +102,6 @@ export default function ContactHero() {
           </span>
         </motion.div>
       </div>
-    </div>
+    </header>
   );
 }

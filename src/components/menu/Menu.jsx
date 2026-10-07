@@ -1,24 +1,16 @@
 ﻿import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { menuCategories } from "../../data/menuData";
 import MenuHeader from "./MenuHeader";
 import MenuCategories from "./MenuCategories";
 import MenuProductGrid from "./MenuProductGrid";
 
-/**
- * Menu — Componente coordinador de la seccion Menu.
- *
- * Responsabilidades:
- *   - Mantener estado de categoria seleccionada (local, sin store global)
- *   - Renderizar hero visual de la categoria activa con imagen real
- *   - Coordinar sub-componentes
- */
-export default function Menu() {
+// Componente coordinador de la seccion Menu
+export default function Menu({ categories }) {
   const [selectedCategoryId, setSelectedCategoryId] = useState(
-    menuCategories[0]?.id ?? ""
+    categories[0]?.id ?? ""
   );
 
-  const selectedCategory = menuCategories.find(
+  const selectedCategory = categories.find(
     (cat) => cat.id === selectedCategoryId
   );
 
@@ -79,7 +71,7 @@ export default function Menu() {
         <MenuHeader />
 
         <MenuCategories
-          categories={menuCategories}
+          categories={categories}
           selectedId={selectedCategoryId}
           onSelect={setSelectedCategoryId}
         />

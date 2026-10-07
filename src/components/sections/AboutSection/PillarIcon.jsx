@@ -21,7 +21,7 @@ const PATHS = {
   ),
 };
 
-/** PillarIcon — Stroke icon keyed by name ("beer" | "cocktail" | "music"). */
+// Stroke icon keyed by name ("beer" | "cocktail" | "music")
 export default function PillarIcon({ name }) {
   return (
     <svg

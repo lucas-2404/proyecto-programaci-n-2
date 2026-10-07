@@ -1,19 +1,15 @@
 import { memo } from "react";
 import { RevealGroup, RevealItem } from "../../ui/Reveal";
 import { cn } from "../../../utils/cn";
-import { CONTACT_INFO } from "./contactContent";
 
 // ── Sub-component (memoized) ────────────────────────────────────────────────────
-/**
- * InfoCard — Single glass card for one piece of contact info.
- * Conditionally wraps content in an <a> if an href is provided.
- */
+// Single glass card for one piece of contact info
 const InfoCard = memo(function InfoCard({ id, icon, label, value, detail, href, external }) {
-  const inner = (
-    <div className="flex items-start gap-4">
+  const content = (
+    <>
       {/* Icon container */}
       <div
-        className="mt-0.5 flex h-11 w-11 flex-shrink-0 items-center justify-center
+        className="flex h-12 w-12 flex-shrink-0 items-center justify-center
                    rounded-2xl bg-brand-gold/10 border border-brand-gold/20"
         aria-hidden="true"
       >
@@ -43,11 +39,12 @@ const InfoCard = memo(function InfoCard({ id, icon, label, value, detail, href, 
           <p className="text-xs text-brand-muted mt-0.5">{detail}</p>
         )}
       </div>
-    </div>
+    </>
   );
 
   const cardClasses = cn(
     "group relative glass border border-brand-border rounded-[22px] p-6",
+    "flex items-center gap-4 w-full h-full text-left",
     "transition-all duration-300",
     "hover:border-brand-gold/40 hover:shadow-gold-glow",
     href && "cursor-pointer"
@@ -59,23 +56,21 @@ const InfoCard = memo(function InfoCard({ id, icon, label, value, detail, href, 
       : {};
     return (
       <a id={id} href={href} className={cardClasses} {...linkProps}>
-        {inner}
+        {content}
       </a>
     );
   }
 
   return (
     <div id={id} className={cardClasses}>
-      {inner}
+      {content}
     </div>
   );
 });
 
 // ── Main component ──────────────────────────────────────────────────────────────
-/**
- * ContactInfo — Grid of 3 glass cards: address, phone, hours.
- */
-export default function ContactInfo() {
+// Grid of 3 glass cards: address, phone, hours
+export default function ContactInfo({ items }) {
   return (
     <div className="section-container">
       <RevealGroup
@@ -83,8 +78,9 @@ export default function ContactInfo() {
         stagger={0.1}
         className="grid grid-cols-1 gap-4 sm:grid-cols-3"
       >
-        {CONTACT_INFO.map((item) => (
-          <RevealItem as="li" key={item.id}>
+        {/* .map() crea una tarjeta por dato; la key es el `id`, único y estable */}
+        {items.map((item) => (
+          <RevealItem as="li" key={item.id} className="h-full">
             <InfoCard {...item} />
           </RevealItem>
         ))}

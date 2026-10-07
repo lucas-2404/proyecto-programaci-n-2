@@ -7,7 +7,6 @@ import RollingNumber from "../../ui/RollingNumber";
 import SectionEyebrow from "../../ui/SectionEyebrow";
 import { Reveal, RevealGroup, RevealItem } from "../../ui/Reveal";
 import PillarIcon from "./PillarIcon";
-import { GALLERY, PILLARS, STATS, STORY, TAP_LIST } from "./aboutContent";
 
 const IMAGE_ZOOM = "transition-transform duration-700 ease-out group-hover:scale-105";
 const GLASS_CARD = "rounded-[22px] border border-white/[0.08] bg-white/[0.035]";
@@ -27,14 +26,8 @@ const DEPTH = {
   tapList: [36, -36],
 };
 
-/**
- * AboutSection — Story, craft beer and atmosphere of Los Amigos.
- * Entrance animations: framer-motion whileInView (once), transform + opacity only.
- * Scroll parallax: layers move at different speeds (see DEPTH) and photos drift
- * inside their frames.
- * MotionConfig honours prefers-reduced-motion (drops the translate, keeps the fade).
- */
-export default function AboutSection() {
+// Story, craft beer and atmosphere of Los Amigos
+export default function AboutSection({ story, stats, gallery, pillars, tapList }) {
   return (
     <MotionConfig reducedMotion="user">
       <section
@@ -43,10 +36,7 @@ export default function AboutSection() {
         className="relative isolate overflow-hidden bg-gradient-to-b from-gray-900 to-black py-24 md:py-36"
       >
         <NoiseOverlay />
-        {/* Glow de fondo. Antes era un div de 720×720 con blur-[160px] dentro
-            de un <Parallax>: el navegador tenía que re-rasterizar ese desenfoque
-            gigante en cada frame de scroll. Un radial-gradient da el mismo halo
-            difuso, se rasteriza una sola vez y no crea capa ni filtro. */}
+        {/* Halo de fondo: un degradado, más liviano que un blur */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-48 top-96 -z-10 h-[45rem] w-[45rem] rounded-full"
@@ -83,15 +73,18 @@ export default function AboutSection() {
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
             <Parallax range={DEPTH.story} className="flex flex-col justify-between gap-12 lg:col-span-5 lg:py-2">
               <RevealGroup className="flex flex-col gap-6 text-[17px] leading-[1.75]">
-                {STORY.map((paragraph, i) => (
-                  <RevealItem as="p" key={i} className={i === 0 ? "text-brand-text" : "text-brand-subtle"}>
+                {/* Un <p> por párrafo. La key es el propio texto (no se repite);
+                    el índice `i` solo decide el color del primero. */}
+                {story.map((paragraph, i) => (
+                  <RevealItem as="p" key={paragraph} className={i === 0 ? "text-brand-text" : "text-brand-subtle"}>
                     {paragraph}
                   </RevealItem>
                 ))}
               </RevealGroup>
 
               <RevealGroup as="dl" className="grid grid-cols-3 border-t border-white/[0.08] pt-7">
-                {STATS.map(({ value, label }, i) => (
+                {/* Una cifra por elemento del arreglo; la etiqueta es única y sirve de key. */}
+                {stats.map(({ value, label }, i) => (
                   <RevealItem
                     key={label}
                     className={i > 0 ? "flex flex-col-reverse gap-1.5 border-l border-white/[0.08] pl-4 sm:pl-6" : "flex flex-col-reverse gap-1.5"}
@@ -109,8 +102,8 @@ export default function AboutSection() {
               <RevealGroup stagger={0.15} className="grid grid-cols-2 gap-4 md:gap-5 lg:h-[40rem] lg:grid-rows-2">
                 <RevealItem as="figure" className="group relative col-span-2 aspect-[4/3] overflow-hidden rounded-[22px] lg:col-span-1 lg:row-span-2 lg:aspect-auto">
                   <ParallaxImage
-                    photoId={GALLERY.main.photoId}
-                    alt={GALLERY.main.alt}
+                    photoId={gallery.main.photoId}
+                    alt={gallery.main.alt}
                     priority
                     width={1080}
                     height={810}
@@ -119,12 +112,13 @@ export default function AboutSection() {
                   />
                   <figcaption className="glass-dark absolute inset-x-4 bottom-4 flex flex-col gap-0.5 rounded-2xl px-4 py-3.5">
                     <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-gold">
-                      {GALLERY.main.caption.title}
+                      {gallery.main.caption.title}
                     </span>
-                    <span className="text-sm text-brand-heading">{GALLERY.main.caption.place}</span>
+                    <span className="text-sm text-brand-heading">{gallery.main.caption.place}</span>
                   </figcaption>
                 </RevealItem>
-                {GALLERY.side.map(({ photoId, alt }) => (
+                {/* Las fotos laterales: una por elemento, con su id de foto como key. */}
+                {gallery.side.map(({ photoId, alt }) => (
                   <RevealItem key={photoId} className="group relative aspect-square overflow-hidden rounded-[22px] lg:aspect-auto">
                     <ParallaxImage
                       photoId={photoId}
@@ -142,7 +136,8 @@ export default function AboutSection() {
 
           {/* ── Pillars: each card at its own depth, so the row ripples ── */}
           <RevealGroup as="ul" className="grid gap-6 md:grid-cols-3">
-            {PILLARS.map(({ icon, title, text }, i) => (
+            {/* Una tarjeta por pilar. `i` elige la profundidad del parallax. */}
+            {pillars.map(({ icon, title, text }, i) => (
               <Parallax as="li" key={title} range={DEPTH.pillars[i % DEPTH.pillars.length]}>
                 <RevealItem className={`${GLASS_CARD} flex h-full flex-col gap-4 p-8 md:p-9`}>
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-gold/10 text-brand-gold">
@@ -159,8 +154,8 @@ export default function AboutSection() {
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
             <Reveal className="group relative h-64 overflow-hidden rounded-[22px] md:h-80 lg:col-span-5">
               <ParallaxImage
-                photoId={TAP_LIST.image.photoId}
-                alt={TAP_LIST.image.alt}
+                photoId={tapList.image.photoId}
+                alt={tapList.image.alt}
                 width={1080}
                 height={720}
                 sizes="(min-width: 1024px) 40vw, 100vw"
@@ -178,7 +173,8 @@ export default function AboutSection() {
                 </Link>
               </Reveal>
               <RevealGroup as="ul" stagger={0.08} className="border-b border-white/[0.08]">
-                {TAP_LIST.beers.map(({ style, notes }) => (
+                {/* Una fila por cerveza en canilla; el estilo es único y sirve de key. */}
+                {tapList.beers.map(({ style, notes }) => (
                   <RevealItem
                     as="li"
                     key={style}

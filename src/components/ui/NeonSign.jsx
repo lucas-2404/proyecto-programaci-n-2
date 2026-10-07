@@ -5,7 +5,7 @@ const NEON_TEXT_GLOW =
 const NEON_TUBE_GLOW =
   "shadow-[0_0_6px_rgba(240,192,64,0.85),0_0_18px_rgba(212,160,23,0.45),inset_0_0_10px_rgba(212,160,23,0.35)]";
 
-/** Cord ends sit over the two screws on the plaque (9% / 91% of its width). */
+// Cord ends sit over the two screws on the plaque (9% / 91% of its width)
 function Cords() {
   return (
     <svg

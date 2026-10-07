@@ -6,19 +6,8 @@ import ContactMap from "./ContactMap";
 import ContactForm from "./ContactForm";
 import ContactSocial from "./ContactSocial";
 
-/**
- * ContactSection — Orchestrator for the full /contacto page content.
- *
- * Layout:
- *   1. ContactHero   — Page title and status badge
- *   2. ContactInfo   — 3 glass cards (address, phone, hours)
- *   3. Map + Form    — Side-by-side responsive grid
- *   4. ContactSocial — Social network cards
- *
- * MotionConfig reducedMotion="user" wraps the entire tree so all Framer Motion
- * animations respect the user's prefers-reduced-motion preference.
- */
-export default function ContactSection() {
+// Orchestrator for the full /contacto page content
+export default function ContactSection({ hero, infoItems, socialLinks, formSubjects, mapUrl }) {
   return (
     <MotionConfig reducedMotion="user">
       <section
@@ -40,7 +29,7 @@ export default function ContactSection() {
         />
 
         {/* ── 1. Hero ── */}
-        <ContactHero />
+        <ContactHero hero={hero} />
 
         {/* Section divider */}
         <div
@@ -52,7 +41,7 @@ export default function ContactSection() {
 
         {/* ── 2. Info cards ── */}
         <div className="py-16 md:py-20">
-          <ContactInfo />
+          <ContactInfo items={infoItems} />
         </div>
 
         {/* ── 3. Map + Form ── */}
@@ -60,12 +49,12 @@ export default function ContactSection() {
           <div className="section-container grid gap-8 lg:grid-cols-2 lg:items-stretch">
             {/* Map — takes full column height on desktop */}
             <div className="min-h-[360px] lg:min-h-[560px]">
-              <ContactMap />
+              <ContactMap mapUrl={mapUrl} />
             </div>
 
             {/* Form */}
             <div>
-              <ContactForm />
+              <ContactForm subjects={formSubjects} />
             </div>
           </div>
         </div>
@@ -80,7 +69,7 @@ export default function ContactSection() {
 
         {/* ── 4. Social ── */}
         <div className="py-20 md:py-28">
-          <ContactSocial />
+          <ContactSocial links={socialLinks} />
         </div>
       </section>
     </MotionConfig>

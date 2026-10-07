@@ -1,9 +1,6 @@
 ﻿import { motion } from "framer-motion";
 
-/**
- * MenuHeader — Encabezado de la seccion Menu.
- * Responsabilidad: titulo, descripcion y elementos decorativos introductorios.
- */
+// Encabezado de la seccion Menu
 export default function MenuHeader() {
   return (
     <header className="text-center mb-12 md:mb-16">
