@@ -3,6 +3,7 @@ import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage";
 import ContactPage from "./pages/ContactPage";
 import MenuPage from "./pages/MenuPage";
+import EventsPage from "./pages/EventsPage";
 
 /**
  * App — Root component. Sets up React Router with the master Layout
@@ -22,6 +23,9 @@ export default function App() {
 
           {/* Menu page */}
           <Route path="/menu" element={<MenuPage />} />
+
+          {/* Events page */}
+          <Route path="/eventos" element={<EventsPage />} />
 
           {/* Placeholder routes */}
 
