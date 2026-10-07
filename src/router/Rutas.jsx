@@ -4,11 +4,13 @@ import HomePage from "../pages/HomePage";
 import MenuPage from "../pages/MenuPage";
 import ContactPage from "../pages/ContactPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import EventsPage from "../pages/EventsPage";
 
 // Lista de rutas de la app
 const RUTAS = [
   { id: "inicio",   index: true,       element: <HomePage /> },
   { id: "carta",    path: "/menu",     element: <MenuPage /> },
+  { id: "eventos",  path: "/eventos",  element: <EventsPage /> },
   { id: "contacto", path: "/contacto", element: <ContactPage /> },
   { id: "404",      path: "*",         element: <NotFoundPage title="Página no encontrada" /> },
 ];
