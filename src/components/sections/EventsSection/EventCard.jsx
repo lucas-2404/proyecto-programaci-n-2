@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { unsplashUrl, unsplashSrcSet } from "../../../utils/unsplash";
 import { formatDate } from "../../../utils/cn";
@@ -27,10 +27,13 @@ const CATEGORY_COLORS = {
 /**
  * EventCard — Card individual de un evento.
  * Hover: borde dorado + sombra gold-glow + escala de la imagen.
+ * memo: no se vuelve a dibujar si su evento y su onClick no cambiaron.
+ * `ref` (prop común en React 19) llega desde AnimatePresence mode="popLayout" de la grilla:
+ * lo usa para medir la card cuando sale al filtrar.
  *
- * @param {{ event: object, onClick: function }} props
+ * @param {{ event: object, onClick: function, ref?: object }} props
  */
-export default function EventCard({ event, onClick }) {
+function EventCard({ event, onClick, ref }) {
   const handleClick = useCallback(() => {
     onClick(event);
   }, [event, onClick]);
@@ -56,6 +59,7 @@ export default function EventCard({ event, onClick }) {
 
   return (
     <motion.article
+      ref={ref}
       layout
       variants={CARD_VARIANTS}
       initial="hidden"
@@ -70,7 +74,7 @@ export default function EventCard({ event, onClick }) {
       className="
         group relative flex cursor-pointer flex-col overflow-hidden
         rounded-[22px] border border-brand-border bg-brand-card
-        transition-all duration-300
+        transition-[border-color,box-shadow] duration-300
         hover:border-brand-gold/40 hover:shadow-gold-glow
         focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold
       "
@@ -82,6 +86,7 @@ export default function EventCard({ event, onClick }) {
             src={event.imageLocal}
             alt={`Evento: ${event.title}`}
             loading="lazy"
+            decoding="async"
             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
         ) : (
@@ -91,6 +96,7 @@ export default function EventCard({ event, onClick }) {
             sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
             alt={`Evento: ${event.title}`}
             loading="lazy"
+            decoding="async"
             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
         )}
@@ -145,7 +151,7 @@ export default function EventCard({ event, onClick }) {
             {event.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full glass border border-brand-border px-2 py-0.5 text-[10px] text-brand-muted"
+                className="rounded-full bg-white/[0.04] border border-brand-border px-2 py-0.5 text-[10px] text-brand-muted"
               >
                 {tag}
               </span>
@@ -170,3 +176,5 @@ export default function EventCard({ event, onClick }) {
     </motion.article>
   );
 }
+
+export default memo(EventCard);

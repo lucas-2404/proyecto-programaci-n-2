@@ -30,7 +30,7 @@ export default function MenuProductCard({ product, index }) {
         border border-brand-border
         bg-brand-card
         hover:border-brand-gold/40
-        transition-all duration-300
+        transition-[border-color,box-shadow] duration-300
         hover:shadow-[0_8px_32px_rgba(0,0,0,0.5),0_0_0_1px_rgba(212,160,23,0.15)]
       "
     >

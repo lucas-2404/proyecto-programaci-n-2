@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import EventCard from "./EventCard";
 import { EVENTS_CONTENT } from "./eventsContent";
@@ -15,16 +15,13 @@ const EMPTY_VARIANTS = {
  * EventsGrid — Grilla responsiva de EventCards con filtrado animado.
  * AnimatePresence + layout: el reordenamiento al filtrar es suave, sin jumps.
  *
+ * Envuelta en memo: solo se vuelve a dibujar cuando cambian sus props (al filtrar),
+ * no cuando se abre o cierra el modal. Las animaciones `layout` miden la posición de
+ * todas las cards en cada render, así que evitar renders innecesarios evita trabas.
+ *
  * @param {{ events: object[], onEventClick: function }} props
  */
-export default function EventsGrid({ events, onEventClick }) {
-  const handleEventClick = useCallback(
-    (event) => {
-      onEventClick(event);
-    },
-    [onEventClick]
-  );
-
+function EventsGrid({ events, onEventClick }) {
   return (
     <div id="eventos-grilla" className="section-container mt-10">
       <AnimatePresence mode="popLayout">
@@ -60,7 +57,7 @@ export default function EventsGrid({ events, onEventClick }) {
                 <EventCard
                   key={event.id}
                   event={event}
-                  onClick={handleEventClick}
+                  onClick={onEventClick}
                 />
               ))}
             </AnimatePresence>
@@ -70,3 +67,5 @@ export default function EventsGrid({ events, onEventClick }) {
     </div>
   );
 }
+
+export default memo(EventsGrid);

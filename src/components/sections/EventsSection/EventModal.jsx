@@ -1,5 +1,7 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useScrollLock } from "../../../hooks/useScrollLock";
 import { unsplashUrl, unsplashSrcSet } from "../../../utils/unsplash";
 import { formatDate } from "../../../utils/cn";
 import { EVENTS_CONTENT } from "./eventsContent";
@@ -43,79 +45,80 @@ function DetailRow({ label, value }) {
 
 /**
  * EventModal — Modal de detalle de un evento.
- * Accesible: role=dialog, aria-modal, aria-labelledby, focus trap, ESC, scroll lock.
+ * Accesible: role=dialog, aria-modal, aria-labelledby, foco en el botón de cierre,
+ * ESC para cerrar, scroll de la página bloqueado y foco devuelto a la tarjeta al cerrar.
  *
- * @param {{ event: object|null, isOpen: boolean, onClose: function }} props
+ * Se dibuja con un portal directamente en <body>: así el `position: fixed` siempre se
+ * ubica respecto de la ventana, sin importar qué estilos tengan los contenedores de la página.
+ *
+ * @param {{ event: object|null, onClose: function }} props — el modal está abierto mientras haya `event`
  */
-export default function EventModal({ event, isOpen, onClose }) {
+export default function EventModal({ event, onClose }) {
+  const isOpen = event !== null;
   const closeButtonRef = useRef(null);
 
-  // ── ESC + scroll lock ──────────────────────────────────────────────────────
+  const priceLabel = isOpen
+    ? event.price === 0
+      ? C.freeEntry
+      : `$${event.price.toLocaleString("es-AR")}`
+    : null;
+
+  // Mientras está abierto, la página de fondo no scrollea (solo el contenido del modal)
+  useScrollLock(isOpen);
+
+  // ── ESC + foco ─────────────────────────────────────────────────────────────
   useEffect(() => {
+    if (!isOpen) return;
+
+    // Guardamos qué tenía el foco (la tarjeta clickeada) para devolvérselo al cerrar
+    const previouslyFocused = document.activeElement;
     const handleKey = (e) => {
       if (e.key === "Escape") onClose();
     };
 
-    if (isOpen) {
-      window.addEventListener("keydown", handleKey);
-      document.body.style.overflow = "hidden";
-      // Focus trap: foco al botón de cierre al abrir
-      requestAnimationFrame(() => {
-        closeButtonRef.current?.focus();
-      });
-    }
+    window.addEventListener("keydown", handleKey);
+    const frame = requestAnimationFrame(() => {
+      closeButtonRef.current?.focus({ preventScroll: true });
+    });
 
     return () => {
       window.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
+      cancelAnimationFrame(frame);
+      // preventScroll: devolver el foco no debe mover la página
+      previouslyFocused?.focus?.({ preventScroll: true });
     };
   }, [isOpen, onClose]);
 
-  const handleBackdropClick = useCallback(
-    (e) => {
-      if (e.target === e.currentTarget) onClose();
-    },
-    [onClose]
-  );
-
-  if (!event) return null;
-
-  const priceLabel =
-    event.price === 0
-      ? C.freeEntry
-      : `$${event.price.toLocaleString("es-AR")}`;
-
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <>
-          {/* ── Backdrop ── */}
-          <motion.div
-            key="modal-backdrop"
-            variants={BACKDROP_VARIANTS}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm"
-            onClick={handleBackdropClick}
+        // Capa fija que cubre la ventana y centra el panel con flex
+        // (sin translate: framer-motion anima el transform del panel y lo pisaría)
+        <motion.div
+          key="event-modal"
+          variants={BACKDROP_VARIANTS}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+        >
+          {/* ── Backdrop: click afuera del panel cierra ── */}
+          <div
             aria-hidden="true"
+            onClick={onClose}
+            className="absolute inset-0 bg-black/75 backdrop-blur-sm"
           />
 
           {/* ── Panel ── */}
           <motion.div
-            key="modal-panel"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-event-title"
             variants={MODAL_VARIANTS}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
             className="
-              fixed inset-x-4 top-1/2 z-50 -translate-y-1/2
+              relative w-full max-w-2xl
               max-h-[90vh] overflow-y-auto overscroll-contain
               rounded-[24px] bg-brand-surface border border-brand-border shadow-glass-lg
-              md:inset-x-auto md:left-1/2 md:w-full md:max-w-2xl md:-translate-x-1/2
             "
           >
             {/* ── Imagen ── */}
@@ -125,6 +128,7 @@ export default function EventModal({ event, isOpen, onClose }) {
                   src={event.imageLocal}
                   alt={`Imagen del evento: ${event.title}`}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover"
                 />
               ) : (
@@ -134,6 +138,7 @@ export default function EventModal({ event, isOpen, onClose }) {
                   sizes="(min-width: 768px) 672px, 100vw"
                   alt={`Imagen del evento: ${event.title}`}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover"
                 />
               )}
@@ -185,7 +190,7 @@ export default function EventModal({ event, isOpen, onClose }) {
               {/* Detalles en grid */}
               <div
                 aria-label={C.detailsLabel}
-                className="grid grid-cols-2 gap-4 rounded-2xl glass border border-brand-border p-5 sm:grid-cols-3"
+                className="grid grid-cols-2 gap-4 rounded-2xl bg-white/[0.04] border border-brand-border p-5 sm:grid-cols-3"
               >
                 <DetailRow label={C.dateLabel} value={formatDate(event.date)} />
                 <DetailRow label={C.timeLabel} value={event.time} />
@@ -250,7 +255,7 @@ export default function EventModal({ event, isOpen, onClose }) {
                   {event.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full glass border border-brand-border px-3 py-1 text-xs text-brand-muted"
+                      className="rounded-full bg-white/[0.04] border border-brand-border px-3 py-1 text-xs text-brand-muted"
                     >
                       {tag}
                     </span>
@@ -282,8 +287,9 @@ export default function EventModal({ event, isOpen, onClose }) {
               </div>
             </div>
           </motion.div>
-        </>
+        </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

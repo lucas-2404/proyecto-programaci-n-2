@@ -138,7 +138,7 @@ function HeroContent({ tonight }) {
           </Link>
           <Link
             to="/menu"
-            className="glass inline-flex min-h-[52px] items-center justify-center rounded-xl px-8 text-sm font-medium text-brand-heading transition-colors duration-300 hover:border-brand-gold/40 hover:text-brand-gold"
+            className="glass backdrop-blur-[12px] inline-flex min-h-[52px] items-center justify-center rounded-xl px-8 text-sm font-medium text-brand-heading transition-colors duration-300 hover:border-brand-gold/40 hover:text-brand-gold"
           >
             Ver la carta
           </Link>

@@ -1,19 +1,22 @@
-﻿import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-// Locks the document body scroll when `locked` is true
+// Cuántos componentes están pidiendo bloquear el scroll ahora mismo
+// (por ejemplo, el menú mobile y el modal de un evento a la vez).
+let activeLocks = 0;
+
+// Bloquea el scroll de la página mientras `locked` sea true.
+// Solo se desbloquea cuando el último componente que lo pidió lo libera,
+// así dos componentes no se pisan entre sí.
 export function useScrollLock(locked) {
-  const originalOverflowRef = useRef("");
-
   useEffect(() => {
-    if (locked) {
-      originalOverflowRef.current = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = originalOverflowRef.current;
-    }
+    if (!locked) return;
+
+    activeLocks += 1;
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = originalOverflowRef.current;
+      activeLocks -= 1;
+      if (activeLocks === 0) document.body.style.overflow = "";
     };
   }, [locked]);
 }

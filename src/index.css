@@ -9,6 +9,9 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Reserva siempre el lugar de la barra de scroll: al bloquear el scroll
+       (modal, menú mobile) la página no cambia de ancho ni "salta". */
+    scrollbar-gutter: stable;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -61,11 +64,15 @@
    COMPONENTS LAYER – Reusable class-based patterns
    ============================================================ */
 @layer components {
-  /* Glass morphism surface */
+  /* Superficie translúcida (pills, tarjetas, inputs) sobre fondos oscuros lisos.
+     Sin backdrop-blur a propósito: sobre un fondo liso el blur no se ve, pero la GPU
+     lo recalcula en cada frame del scroll por cada elemento (era una causa de trabas).
+     Si una superficie va sobre una FOTO, sumale `backdrop-blur-[12px]` o usá .glass-dark. */
   .glass {
-    @apply backdrop-blur-[12px] bg-white/[0.04] border border-white/[0.08];
+    @apply bg-white/[0.04] border border-white/[0.08];
   }
 
+  /* Superficie oscura con blur real: para usar sobre fotos, mapas o video */
   .glass-dark {
     @apply backdrop-blur-[16px] bg-black/40 border border-white/[0.06];
   }
@@ -116,10 +123,6 @@
    UTILITIES LAYER
    ============================================================ */
 @layer utilities {
-  .will-transform {
-    will-change: transform, opacity;
-  }
-
   .text-balance {
     text-wrap: balance;
   }
