@@ -1,0 +1,289 @@
+{
+  "menuCategories": [
+    {
+      "id": "cocteles",
+      "name": "Cockteles",
+      "description": "Creaciones artesanales con los mejores destilados",
+      "icon": "🍸",
+      "categoryImage": "/img/menu/cocteles.jpg",
+      "products": [
+        {
+          "id": "coctel-mojito-amigos",
+          "name": "Mojito Los Amigos",
+          "description": "Ron blanco, menta fresca, limon, azucar y soda artesanal",
+          "price": 4500,
+          "tags": [
+            "Popular"
+          ],
+          "emoji": "🍹",
+          "image": "/img/menu/productos/mojito.avif"
+        },
+        {
+          "id": "coctel-negroni-rosario",
+          "name": "Negroni Rosario",
+          "description": "Gin premium, Campari, vermu rojo y twist de naranja",
+          "price": 5200,
+          "tags": [
+            "Signature"
+          ],
+          "emoji": "🍊",
+          "image": "/img/menu/productos/negroni.webp"
+        },
+        {
+          "id": "coctel-aperol-spritz",
+          "name": "Aperol Spritz",
+          "description": "Aperol, Prosecco italiano y un toque de soda",
+          "price": 4800,
+          "tags": [],
+          "emoji": "🥂",
+          "image": "/img/menu/productos/aperol-spritz.webp"
+        },
+        {
+          "id": "coctel-margarita-picante",
+          "name": "Margarita Picante",
+          "description": "Tequila reposado, triple sec, limon y jalapeno fresco",
+          "price": 5500,
+          "tags": [
+            "Nuevo"
+          ],
+          "emoji": "🌶️",
+          "image": "/img/menu/productos/margarita-picante.jpg"
+        },
+        {
+          "id": "coctel-old-fashioned",
+          "name": "Old Fashioned",
+          "description": "Bourbon premium, azucar morena, bitters angostura y naranja",
+          "price": 5800,
+          "tags": [
+            "Signature"
+          ],
+          "emoji": "🥃",
+          "image": "/img/menu/productos/old-fashioned.avif"
+        },
+        {
+          "id": "coctel-daiquiri-mango",
+          "name": "Daiquiri de Mango",
+          "description": "Ron blanco, mango fresco, limon y azucar de cana",
+          "price": 4600,
+          "tags": [],
+          "emoji": "🥭",
+          "image": "/img/menu/productos/daiquiri-mango.webp"
+        }
+      ]
+    },
+    {
+      "id": "cervezas",
+      "name": "Cervezas",
+      "description": "Artesanales y de importacion seleccionadas",
+      "icon": "🍺",
+      "categoryImage": "/img/menu/cervezas.jpg",
+      "products": [
+        {
+          "id": "cerveza-ipa-local",
+          "name": "IPA Artesanal",
+          "description": "India Pale Ale local, lupulada y aromatica. 500ml",
+          "price": 3200,
+          "tags": [
+            "Popular"
+          ],
+          "emoji": "🍺",
+          "image": "/img/menu/productos/ipa-artesanal.png"
+        },
+        {
+          "id": "cerveza-stout-oscura",
+          "name": "Stout Oscura",
+          "description": "Notas de cafe y chocolate amargo. Cuerpo denso y cremoso. 500ml",
+          "price": 3500,
+          "tags": [],
+          "emoji": "🖤",
+          "image": "/img/menu/productos/stout-oscura.webp"
+        },
+        {
+          "id": "cerveza-golden-ale",
+          "name": "Golden Ale",
+          "description": "Clara, suave y refrescante. Ideal para comenzar la noche. 500ml",
+          "price": 2900,
+          "tags": [],
+          "emoji": "✨",
+          "image": "/img/menu/productos/golden-ale.webp"
+        },
+        {
+          "id": "cerveza-heineken",
+          "name": "Heineken",
+          "description": "Lager holandesa premium. Fria y clasica. 330ml",
+          "price": 2600,
+          "tags": [],
+          "emoji": "🟢",
+          "image": "/img/menu/productos/heineken.webp"
+        },
+        {
+          "id": "cerveza-corona",
+          "name": "Corona",
+          "description": "Lager mexicana con rodaja de limon. Refrescante. 355ml",
+          "price": 2800,
+          "tags": [],
+          "emoji": "🌅",
+          "image": "/img/menu/productos/corona.jpg"
+        }
+      ]
+    },
+    {
+      "id": "picadas",
+      "name": "Picadas",
+      "description": "Para compartir y maridar perfectamente",
+      "icon": "🧀",
+      "categoryImage": "/img/menu/picadas.jpg",
+      "products": [
+        {
+          "id": "picada-clasica",
+          "name": "Picada Clasica",
+          "description": "Quesos blandos y duros, jamon crudo, salame y aceitunas",
+          "price": 8500,
+          "tags": [
+            "Popular"
+          ],
+          "emoji": "🧀",
+          "image": "/img/menu/productos/picada-clasica.jpg"
+        },
+        {
+          "id": "picada-premium",
+          "name": "Picada Premium",
+          "description": "Quesos gourmet, prosciutto, chorizo iberico, pepinillos y mostaza artesanal",
+          "price": 13500,
+          "tags": [
+            "Signature"
+          ],
+          "emoji": "⭐",
+          "image": "/img/menu/productos/picada-premium.webp"
+        },
+        {
+          "id": "alitas-buffalo",
+          "name": "Alitas Buffalo",
+          "description": "12 alitas con salsa buffalo casera y aderezo de queso azul",
+          "price": 7200,
+          "tags": [
+            "Popular"
+          ],
+          "emoji": "🍗",
+          "image": "/img/menu/productos/alitas-buffalo.avif"
+        },
+        {
+          "id": "papas-rusticas",
+          "name": "Papas Rusticas",
+          "description": "Con piel, condimentadas con romero y sal gruesa. Salsas a eleccion",
+          "price": 4800,
+          "tags": [],
+          "emoji": "🍟",
+          "image": "/img/menu/productos/papas-rusticas.webp"
+        },
+        {
+          "id": "bruschetta-tomate",
+          "name": "Bruschetta",
+          "description": "Pan artesanal tostado, tomate perita, albahaca y aceite de oliva",
+          "price": 4200,
+          "tags": [
+            "Vegano"
+          ],
+          "emoji": "🍅",
+          "image": "/img/menu/productos/bruschetta.webp"
+        }
+      ]
+    },
+    {
+      "id": "shots",
+      "name": "Shots",
+      "description": "Para los que quieren empezar bien la noche",
+      "icon": "🥃",
+      "categoryImage": "/img/menu/shots.jpg",
+      "products": [
+        {
+          "id": "shot-tequila",
+          "name": "Tequila Blanco",
+          "description": "Shot de tequila 100% agave con sal y limon",
+          "price": 1800,
+          "tags": [],
+          "emoji": "🥃",
+          "image": "/img/menu/productos/tequila-blanco.webp"
+        },
+        {
+          "id": "shot-jagermeister",
+          "name": "Jagermeister",
+          "description": "El clasico digestivo aleman. Frio directo",
+          "price": 2200,
+          "tags": [
+            "Popular"
+          ],
+          "emoji": "🦌",
+          "image": "/img/menu/productos/jagermeister.jpg"
+        },
+        {
+          "id": "shot-fernet-cola",
+          "name": "Fernet con Cola",
+          "description": "Fernet Branca con Coca-Cola. El favorito argentino",
+          "price": 2000,
+          "tags": [
+            "Popular"
+          ],
+          "emoji": "🇦🇷",
+          "image": "/img/menu/productos/fernet-cola.jpg"
+        },
+        {
+          "id": "shot-vodka-premium",
+          "name": "Vodka Premium",
+          "description": "Vodka destilado cinco veces. Limpio y suave",
+          "price": 2400,
+          "tags": [],
+          "emoji": "❄️",
+          "image": "/img/menu/productos/vodka-premium.webp"
+        }
+      ]
+    },
+    {
+      "id": "sin-alcohol",
+      "name": "Sin Alcohol",
+      "description": "Opciones refrescantes para todos",
+      "icon": "🧃",
+      "categoryImage": "/img/menu/sin-alcohol.jpg",
+      "products": [
+        {
+          "id": "limonada-menta",
+          "name": "Limonada de Menta",
+          "description": "Limones frescos, menta, azucar y soda. Servida con hielo",
+          "price": 2800,
+          "tags": [],
+          "emoji": "🍋",
+          "image": "/img/menu/productos/limonada-menta.webp"
+        },
+        {
+          "id": "mocktail-frutilla",
+          "name": "Mocktail de Frutilla",
+          "description": "Frutillas frescas, albahaca, limon y agua con gas",
+          "price": 3200,
+          "tags": [
+            "Nuevo"
+          ],
+          "emoji": "🍓",
+          "image": "/img/menu/productos/mocktail-frutilla.jpg"
+        },
+        {
+          "id": "agua-san-pellegrino",
+          "name": "San Pellegrino",
+          "description": "Agua mineral con gas italiana. 500ml",
+          "price": 1800,
+          "tags": [],
+          "emoji": "💧",
+          "image": "/img/menu/productos/san-pellegrino.webp"
+        },
+        {
+          "id": "jugo-naranja",
+          "name": "Jugo de Naranja",
+          "description": "Exprimido en el momento. Natural y sin azucar agregada",
+          "price": 2200,
+          "tags": [],
+          "emoji": "🍊",
+          "image": "/img/menu/productos/jugo-naranja.jpg"
+        }
+      ]
+    }
+  ]
+}
