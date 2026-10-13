@@ -81,6 +81,7 @@ export default function EventsFeaturedCarousel() {
                   src={event.imageLocal}
                   alt={`Evento: ${event.title}`}
                   loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               ) : (
@@ -96,6 +97,7 @@ export default function EventsFeaturedCarousel() {
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   alt={`Evento: ${event.title}`}
                   loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               )}

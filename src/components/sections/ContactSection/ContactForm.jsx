@@ -444,7 +444,7 @@ export default function ContactForm({ subjects }) {
               aria-busy={isLoading}
               className={cn(
                 "relative mt-2 inline-flex items-center justify-center gap-2.5",
-                "px-8 py-3.5 rounded-xl font-semibold text-sm will-transform",
+                "px-8 py-3.5 rounded-xl font-semibold text-sm",
                 "transition-all duration-300",
                 isLoading
                   ? "bg-brand-gold/60 text-brand-bg cursor-not-allowed"

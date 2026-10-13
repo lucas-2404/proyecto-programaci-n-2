@@ -2,6 +2,7 @@
 import { NavLink, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "../../img/logolosamigos.png";
+import { useScrollLock } from "../../hooks/useScrollLock";
 
 // ── Animation variants ─────────────────────────────────────────────────────────
 const mobileMenuVariants = {
@@ -77,11 +78,8 @@ export default function Navbar({ navLinks, socialLinks }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [isMenuOpen]);
+  // Lock body scroll when mobile menu is open (shared hook: doesn't clash with the events modal)
+  useScrollLock(isMenuOpen);
 
   const toggleMenu = useCallback(() => setIsMenuOpen((v) => !v), []);
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
@@ -112,6 +110,7 @@ export default function Navbar({ navLinks, socialLinks }) {
               <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-gold-glow group-hover:shadow-gold-strong transition-shadow duration-300 bg-brand-card">
                 <img
                   src={logoImg}
+                  decoding="async"
                   alt="Logo Los Amigos Bar"
                   className="w-full h-full object-cover"
                 />
@@ -169,7 +168,7 @@ export default function Navbar({ navLinks, socialLinks }) {
                 inline-flex items-center gap-2 px-5 py-2 rounded-xl
                 bg-brand-gold text-brand-bg font-semibold text-sm
                 shadow-gold-glow hover:shadow-gold-strong hover:bg-brand-gold-light
-                transition-all duration-300 will-transform
+                transition-all duration-300
               "
             >
               <span>Reservar Mesa</span>

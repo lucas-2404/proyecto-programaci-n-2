@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import SectionEyebrow from "../../ui/SectionEyebrow";
 import NoiseOverlay from "../../ui/NoiseOverlay";
-import { Reveal } from "../../ui/Reveal";
 import EventCountdown from "./EventCountdown";
 import { EVENTS_CONTENT } from "./eventsContent";
 import { featuredEvents } from "../../../data/eventsData";
@@ -23,8 +22,6 @@ const TEXT_VARIANTS = {
   }),
 };
 
-const VIEWPORT = { once: true, amount: 0.2 };
-
 /**
  * EventsHero — Sección hero de la página de eventos.
  * Incluye H1, subtítulo, badge del próximo evento featured y countdown en vivo.
@@ -44,6 +41,7 @@ export default function EventsHero() {
               alt=""
               aria-hidden="true"
               loading="eager"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover"
             />
           ) : (
@@ -54,6 +52,7 @@ export default function EventsHero() {
               alt=""
               aria-hidden="true"
               loading="eager"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover"
             />
           )}

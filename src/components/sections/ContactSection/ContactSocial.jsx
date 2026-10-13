@@ -16,7 +16,7 @@ const SocialCard = memo(function SocialCard({ label, handle, href, icon }) {
         group flex flex-col items-center gap-3 glass border border-brand-border
         rounded-[22px] p-6 text-center
         hover:border-brand-gold/40 hover:shadow-gold-glow
-        transition-all duration-300 will-transform
+        transition-all duration-300
       "
     >
       {/* Icon circle */}

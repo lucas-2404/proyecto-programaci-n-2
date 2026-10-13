@@ -28,7 +28,7 @@ function CountUnit({ value, label, index }) {
       {/* Número */}
       <div
         className="
-          glass relative flex h-16 w-16 items-center justify-center
+          glass backdrop-blur-[12px] relative flex h-16 w-16 items-center justify-center
           rounded-2xl border border-brand-gold/20
           shadow-inner-gold md:h-20 md:w-20
         "

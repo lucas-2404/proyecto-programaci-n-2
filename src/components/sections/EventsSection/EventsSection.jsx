@@ -6,7 +6,7 @@ import EventsFeaturedCarousel from "./EventsFeaturedCarousel";
 import EventsFilter from "./EventsFilter";
 import EventsGrid from "./EventsGrid";
 import EventModal from "./EventModal";
-import { events, upcomingEvents } from "../../../data/eventsData";
+import { upcomingEvents } from "../../../data/eventsData";
 
 /**
  * EventsSection — Orchestrador de la página de Eventos de Los Amigos Bar.
@@ -24,8 +24,10 @@ import { events, upcomingEvents } from "../../../data/eventsData";
 export default function EventsSection() {
   // ── Estado ─────────────────────────────────────────────────────────────────
   const [activeCategory, setActiveCategory] = useState("Todos");
+  // Un solo estado para el modal: hay un evento elegido → el modal está abierto.
+  // (AnimatePresence conserva el evento anterior mientras dura la animación de salida,
+  // así que no hace falta ningún setTimeout.)
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // ── Handlers ───────────────────────────────────────────────────────────────
   const handleCategoryChange = useCallback((cat) => {
@@ -34,13 +36,10 @@ export default function EventsSection() {
 
   const handleEventClick = useCallback((event) => {
     setSelectedEvent(event);
-    setIsModalOpen(true);
   }, []);
 
   const handleModalClose = useCallback(() => {
-    setIsModalOpen(false);
-    // Limpiar el evento seleccionado después de que la animación de salida termina
-    setTimeout(() => setSelectedEvent(null), 300);
+    setSelectedEvent(null);
   }, []);
 
   // ── Datos derivados ────────────────────────────────────────────────────────
@@ -99,12 +98,8 @@ export default function EventsSection() {
         </div>
       </section>
 
-      {/* ── 5. Modal — Fuera del section para que el z-index no quede atrapado ── */}
-      <EventModal
-        event={selectedEvent}
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-      />
+      {/* ── 5. Modal — se dibuja en <body> con un portal (ver EventModal) ── */}
+      <EventModal event={selectedEvent} onClose={handleModalClose} />
     </MotionConfig>
   );
 }

@@ -26,7 +26,7 @@ const SocialButton = memo(function SocialButton({ label, href, icon }) {
         group flex items-center justify-center w-10 h-10 rounded-xl
         glass border border-brand-border
         hover:border-brand-gold/40 hover:shadow-gold-glow
-        transition-all duration-300 will-transform
+        transition-all duration-300
       "
     >
       <svg
@@ -68,10 +68,11 @@ export default function Footer({ links, socialLinks, contactInfo }) {
 
   return (
     <footer className="relative mt-auto border-t border-brand-border overflow-hidden" aria-label="Pie de página">
-      {/* Background decorative elements */}
+      {/* Background decorative elements — gradientes radiales en vez de `blur`:
+          mismo brillo difuso, pero sin un filtro costoso que redibujar al scrollear */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute bottom-0 left-1/4 w-64 h-64 rounded-full bg-brand-gold/5 blur-[80px]" />
-        <div className="absolute top-0 right-1/3 w-48 h-48 rounded-full bg-brand-gold/3 blur-[60px]" />
+        <div className="absolute -bottom-20 left-1/4 -ml-20 w-[26rem] h-[26rem] rounded-full bg-[radial-gradient(closest-side,rgba(212,160,23,0.05),transparent)]" />
+        <div className="absolute -top-16 right-1/3 -mr-16 w-80 h-80 rounded-full bg-[radial-gradient(closest-side,rgba(212,160,23,0.03),transparent)]" />
       </div>
 
       <div className="relative section-container py-16 lg:py-20">
@@ -89,6 +90,7 @@ export default function Footer({ links, socialLinks, contactInfo }) {
               <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-gold-glow group-hover:shadow-gold-strong transition-shadow duration-300 bg-brand-card">
                 <img
                   src={logoImg}
+                  decoding="async"
                   alt="Logo Los Amigos Bar"
                   className="w-full h-full object-cover"
                 />

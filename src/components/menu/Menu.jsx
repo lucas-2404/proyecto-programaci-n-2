@@ -101,7 +101,7 @@ export default function Menu({ categories }) {
 
       {/* Background ambient glow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10" aria-hidden="true">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-brand-gold/4 blur-[120px]" />
+        <div className="absolute top-1/3 -mt-[120px] left-1/2 -translate-x-1/2 w-[900px] h-[540px] rounded-full bg-[radial-gradient(closest-side,rgba(212,160,23,0.04),transparent)]" />
       </div>
     </section>
   );
