@@ -9,7 +9,8 @@ Necesitás tener instalado [Node.js](https://nodejs.org) (versión 20 o superior
 
 ```bash
 npm install        # instala las dependencias (solo la primera vez)
-npm run dev        # servidor de desarrollo en http://localhost:5173
+npm run server     # API de la carta (json-server) en http://localhost:3001
+npm run dev        # servidor de desarrollo en http://localhost:5173 (en otra terminal)
 npm run build      # genera la versión de producción en /dist
 npm run preview    # prueba la versión de producción
 npm run lint       # revisa el código con ESLint
@@ -28,8 +29,11 @@ src/
 │   ├── MenuPage.jsx
 │   ├── ContactPage.jsx
 │   └── NotFoundPage.jsx
-├── data/               Datos (textos, listas, precios). Sin JSX
-│   ├── homeData.js  aboutData.js  contactData.js  menuData.js  siteData.js
+├── data/               Datos estáticos (textos, listas). Sin JSX
+│   ├── homeData.js  aboutData.js  contactData.js  eventsData.js  siteData.js
+├── services/           Peticiones HTTP con axios
+│   ├── api.js          Instancia de axios con la URL base de la API
+│   └── menuService.js  getMenuCategories(): pide la carta al json-server
 ├── components/
 │   ├── layout/         Navbar, Footer y Layout (estructura común)
 │   ├── sections/       Secciones grandes: Hero, About y Contact
@@ -48,6 +52,27 @@ Separarlas tiene dos ventajas:
 1. **`App.jsx` queda con una sola responsabilidad**: arrancar el router.
 2. **Agregar una página es una línea**: se suma un objeto a la lista `RUTAS` y no hace falta
    tocar nada más.
+
+## La carta viene de una API (json-server + axios)
+
+Los datos de la carta ya no están en un archivo `.js`: viven en `db.json` y los sirve
+[json-server](https://github.com/typicode/json-server) como si fuera una API real
+(`GET http://localhost:3001/menuCategories`). El recorrido es:
+
+```
+db.json ─▶ json-server ─▶ services/menuService.js ─▶ hooks/useMenuCategories.js ─▶ pages/MenuPage.jsx ─▶ <Menu />
+           (npm run server)  axios + try/catch          estados: cargando / error / datos   elige qué mostrar
+```
+
+1. **`menuService.js`**: función `async` que hace el `GET` con axios dentro de un `try/catch`.
+   Si falla, deja el detalle en la consola y lanza un error con un mensaje entendible.
+2. **`useMenuCategories.js`**: llama al servicio cuando se monta la página y guarda tres estados:
+   `isLoading`, `error` y `categories`. También expone `retry` para volver a intentar.
+3. **`MenuPage.jsx`**: muestra `<MenuSkeleton />` mientras carga, `<MenuError />` si falló
+   o `<Menu />` con los datos, que siguen bajando por props como antes.
+
+Las imágenes de los productos están en `public/img/menu/productos/` porque un JSON solo
+puede guardar texto: cada producto tiene la ruta de su imagen (`"/img/menu/productos/mojito.avif"`).
 
 ## Estrategias SEO implementadas
 
